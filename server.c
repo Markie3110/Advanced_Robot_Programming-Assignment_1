@@ -11,6 +11,8 @@
 #include <string.h>
 #include <sys/time.h>
 #include <sys/types.h>
+#include <errno.h>
+//#include "include/timestamp.h"
 
 #define WINDOW_SIZE_SHM "/window_server"
 #define USER_INPUT_SHM "/input_server"
@@ -37,7 +39,6 @@ int watchdog_pid;
 void interrupt_signal_handler(int signum)
 {
     flag = 1;
-    printf("Interrupt called\n");
 }
 
 
@@ -46,15 +47,20 @@ void watchdog_signal_handler(int signum)
     /*
     A signal handler that sends a response back to the watchdog
     */
+    printf("Received SIGUSR1\n");
     kill(watchdog_pid, SIGUSR2);
 }
 
 
 int main(int argc, char *argv[])
 {
+    // char *now = current_time();
+    // printf("%s\n", now);
+
     char path[200];
     getcwd(path, 200);
     printf("%s\n", path);
+    
 
     // Declare a signal handler to handle an INTERRUPT SIGNAL
     struct sigaction act;
@@ -72,19 +78,25 @@ int main(int argc, char *argv[])
 
     // Create a FIFO to send the pid to the watchdog
     int serverpid_fd;
-    char *serverpidfifo = "/tmp/serverpidfifo";
+    char *serverpidfifo = "Assignment_1/tmp/serverpidfifo";
     while(1)
     {
         if(mkfifo(serverpidfifo, 0666) == -1)
         {
-            remove(serverpidfifo);
-            perror("Failed to create serverpidfifo\n");
+            if (errno != EEXIST)
+            {
+                perror("Failed to create serverpidfifo\n");
+                remove(serverpidfifo);
+            }
         }
         else
         {
             printf("Created serverpidfifo\n");
             break;  
         }
+        usleep(10);
+    }
+    while (access(serverpidfifo, F_OK) == -1) {
         usleep(10);
     }
     serverpid_fd = open(serverpidfifo, O_WRONLY);

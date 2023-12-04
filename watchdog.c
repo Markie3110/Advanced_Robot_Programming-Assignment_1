@@ -38,15 +38,17 @@ int main(int argc, char *argv)
     act.sa_handler = &watchdog_signal_handler;
     sigaction(SIGUSR2, &act, NULL);
 
+
     // Create a FIFO to receive the pid from the server
     int serverpid_fd;
-    char *serverpidfifo = "/tmp/serverpidfifo";
+    char *serverpidfifo = "Assignment_1/tmp/serverpidfifo";
     while(1)
     {
         serverpid_fd = open(serverpidfifo, O_RDONLY);
         if (serverpid_fd == -1)
         {
             perror("Failed to open serverpidfifo\n");
+            printf("Not opened\n");
 
         }
         else
@@ -59,7 +61,7 @@ int main(int argc, char *argv)
 
     // Create a FIFO to receive the pid from the UI
     int UIpid_fd;
-    char *UIpidfifo = "/tmp/UIpidfifo";
+    char *UIpidfifo = "Assignment_1/tmp/UIpidfifo";
     while(1)
     {
         UIpid_fd = open(UIpidfifo, O_RDONLY);
@@ -77,7 +79,7 @@ int main(int argc, char *argv)
 
     // Create a FIFO to receive the pid from the drone
     int dronepid_fd;
-    char *dronepidfifo = "/tmp/dronepidfifo";
+    char *dronepidfifo = "Assignment_1/tmp/dronepidfifo";
     while(1)
     {
         dronepid_fd = open(dronepidfifo, O_RDONLY);
@@ -186,7 +188,7 @@ int main(int argc, char *argv)
     int current_pid;
 
 
-    sleep(7);
+    sleep(15);
 
 
     while(1)

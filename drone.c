@@ -50,6 +50,7 @@ void interrupt_signal_handler(int signum)
 
 void watchdog_signal_handler(int signum)
 {
+    printf("Received SIGUSR1\n");
     kill(watchdog_pid, SIGUSR2);
 }
 
@@ -104,12 +105,11 @@ int main(int argc, char *argv[])
 
     // Create a FIFO to send the pid to the watchdog
     int dronepid_fd;
-    char *dronepidfifo = "/tmp/dronepidfifo";
+    char *dronepidfifo = "Assignment_1/tmp/dronepidfifo";
     while(1)
     {
         if(mkfifo(dronepidfifo, 0666) == -1)
         {
-            sleep(10);
             perror("Failed to create dronepidfifo");
             remove(dronepidfifo);
         }
@@ -120,10 +120,11 @@ int main(int argc, char *argv[])
         }
         usleep(10);
     }
+    printf("Hi\n");
     dronepid_fd = open(dronepidfifo, O_WRONLY);
     if (dronepid_fd == -1)
     {
-        printf("Failed to open dronepidfifo\n");
+        perror("Failed to open dronepidfifo\n");
     }
     else
     {
@@ -176,7 +177,7 @@ int main(int argc, char *argv[])
 
     // Open a FIFO to receive the keypressed values
     int keypressed_fd;
-    char *keypressedfifo = "/tmp/keypressedfifo";
+    char *keypressedfifo = "Assignment_1/tmp/keypressedfifo";
     fd_set rfds;
     struct timeval tv;
     while(1)

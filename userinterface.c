@@ -144,7 +144,7 @@ int main(int argc, char *argv)
 
     // Create a FIFO to send the pid to the watchdog
     int UIpid_fd;
-    char *UIpidfifo = "/tmp/UIpidfifo";
+    char *UIpidfifo = "Assignment_1/tmp/UIpidfifo";
     while(1)
     {
         if(mkfifo(UIpidfifo, 0666) == -1)
@@ -221,7 +221,7 @@ int main(int argc, char *argv)
 
     // Create a FIFO to pass the keypressed values to the drone
     int keypressed_fd;
-    char *keypressedfifo = "/tmp/keypressedfifo";
+    char *keypressedfifo = "Assignment_1/tmp/keypressedfifo";
     while(1)
     {
         if(mkfifo(keypressedfifo, 0666) == -1)
