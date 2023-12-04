@@ -32,21 +32,23 @@
 #define DRONE_SHM_SIZE 5
 #define WATCHDOG_SHM_SIZE 10
 
+
 // Declare global variables
 int flag = 0; // Flag variable to clean memory, close links and quit process
 int watchdog_pid;
 
+
 void interrupt_signal_handler(int signum)
 {
     flag = 1;
-    printf("Interrupt called\n");
 }
+
 
 void watchdog_signal_handler(int signum)
 {
     kill(watchdog_pid, SIGUSR2);
-    printf("Received SIGUSR1\n");
 }
+
 
 int main(int argc, char *argv)
 {
@@ -57,14 +59,17 @@ int main(int argc, char *argv)
     act.sa_handler = &interrupt_signal_handler;
     sigaction(SIGTERM, &act, NULL); 
 
+
     struct sigaction act2;
     bzero(&act2, sizeof(act2));
     act2.sa_handler = &watchdog_signal_handler;
     sigaction(SIGUSR1, &act2, NULL);
 
+
     // Initialize pointers to the shared memory
     int droneMaxY, droneMaxX;
     int dronePositionX, dronePositionY;
+
 
     /* NCURSES START*/
     initscr();
@@ -72,16 +77,20 @@ int main(int argc, char *argv)
     cbreak();
     curs_set(0);
 
+
     // Get the windows maximum height and width
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
+
     char *s = "DRONE WINDOW";
     mvprintw(0, 2, "%s", s);
+
 
     // Initialize the window variables
     WINDOW *dronewin;
     WINDOW *inspectwin;
+
 
     // Get the required window dimensions
     int droneWin_height, droneWin_width, droneWin_startY, droneWin_startX;
@@ -90,6 +99,7 @@ int main(int argc, char *argv)
     droneWin_startY = 1;
     droneWin_startX = 1;
 
+
     // Determine the dimensions of the inspector window
     int inspWin_height, inspWin_width, inspWin_startY, inspWin_startX;
     inspWin_height = yMax/6;
@@ -97,11 +107,14 @@ int main(int argc, char *argv)
     inspWin_startY = droneWin_height + (yMax/6);
     inspWin_startX = 1;
 
+
     // Maximum positions for drone
     droneMaxY = droneWin_height;
     droneMaxX = droneWin_width;
 
+
     int dimList[9] = {droneWin_height, droneWin_width, droneWin_startY, droneWin_startX, inspWin_height, inspWin_width, inspWin_startY, inspWin_startX};
+
 
     // Intialise the interface
     dronewin = newwin(dimList[0], dimList[1], dimList[2], dimList[3]);
@@ -128,9 +141,10 @@ int main(int argc, char *argv)
     wrefresh(dronewin);
     wrefresh(inspectwin);
 
+
     // Create a FIFO to send the pid to the watchdog
     int UIpid_fd;
-    char *UIpidfifo = "/home/mark/Robotics_Masters/Advanced_Robot_Programming/Assignments/Assignment_1/tmp/UIpidfifo";
+    char *UIpidfifo = "/tmp/UIpidfifo";
     while(1)
     {
         if(mkfifo(UIpidfifo, 0666) == -1)
@@ -159,10 +173,12 @@ int main(int argc, char *argv)
         printf("Opened UIpidfifo\n");
     }
 
+
     // Send the pid to the watchdog
     int pid = getpid();
     int pid_buf[1] = {pid};
     write(UIpid_fd, pid_buf, sizeof(pid_buf));
+
 
     // Create the shared memory for the watchdog PID
     sem_t *sem_watchdog = sem_open(WATCHDOG_SEMAPHORE, O_CREAT, S_IRWXU | S_IRWXG, 1);
@@ -188,6 +204,7 @@ int main(int argc, char *argv)
     int *watchdog_ptr = mmap(NULL, WATCHDOG_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_watchdog, 0);
     sem_post(sem_watchdog);
 
+
     // Read the watchdog PID from shared memory
     int watchdog_list[1] = {0};;
     int size = sizeof(watchdog_list);
@@ -201,11 +218,10 @@ int main(int argc, char *argv)
     mvwprintw(inspectwin, 1, 1, "Watchdog PID: %d", watchdog_pid);
     wrefresh(inspectwin);
 
-    sleep(5);
 
     // Create a FIFO to pass the keypressed values to the drone
     int keypressed_fd;
-    char *keypressedfifo = "/home/mark/Robotics_Masters/Advanced_Robot_Programming/Assignments/Assignment_1/tmp/keypressedfifo";
+    char *keypressedfifo = "/tmp/keypressedfifo";
     while(1)
     {
         if(mkfifo(keypressedfifo, 0666) == -1)
@@ -232,6 +248,7 @@ int main(int argc, char *argv)
         mvwprintw(inspectwin, 1, 1, "Failed to open keypressedfifo");
     }
 
+
     // Create the shared memory for the window size
     sem_t *sem_window = sem_open(WINDOW_SHM_SEMAPHORE, 0);
     if (sem_window == SEM_FAILED)
@@ -253,6 +270,7 @@ int main(int argc, char *argv)
     int *window_ptr = mmap(NULL, WINDOW_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_window, 0);
     sem_post(sem_window);
     wrefresh(inspectwin);
+
 
     // Open the shared memory for drone position
     sem_t *sem_drone = sem_open(DRONE_POSITION_SEMAPHORE, 0);
@@ -276,22 +294,21 @@ int main(int argc, char *argv)
     sem_post(sem_drone);
     wrefresh(inspectwin);
 
+
     while(1)
     {
         // Grab the input for the current timecycle
         wtimeout(dronewin, DELTA_TIME_MILLISEC);
         int c = wgetch(dronewin);
-        // mvwprintw(dronewin, 1, 1, "Hi");
-        // wrefresh(dronewin);
+
 
         // Pass on the user input to the drone file  
         if (c != 410)
         {
             int buf[1] = {c};
             write(keypressed_fd, buf, sizeof(buf));
-            //mvwprintw(inspectwin, 1, 1, "%d\n", buf[0]);
-            //wrefresh(inspectwin);
         }
+
 
         // Pass the current window sizes to the drone
         int list[2] = {droneMaxY, droneMaxX};
@@ -300,6 +317,7 @@ int main(int argc, char *argv)
         memcpy(window_ptr, list, size);
         sem_post(sem_window);
         wrefresh(inspectwin);
+
 
         // Check if the window has been resized
         int yMax_now, xMax_now;
@@ -327,7 +345,9 @@ int main(int argc, char *argv)
             droneMaxY = droneWin_height;
             droneMaxX = droneWin_width;
 
+
             int dimList[9] = {droneWin_height, droneWin_width, droneWin_startY, droneWin_startX, inspWin_height, inspWin_width, inspWin_startY, inspWin_startX};
+
 
             // Resize the entire interface according to the new dimensions
             clear();
@@ -361,7 +381,8 @@ int main(int argc, char *argv)
             
         }
         
-        // Access the drone location from shared memory and display it
+
+        // Access the drone location from shared memory 
         int dronePosition[2];
         size = sizeof(dronePosition);
         sem_wait(sem_drone);
@@ -373,10 +394,13 @@ int main(int argc, char *argv)
         box(inspectwin, 0, 0);
         mvwprintw(inspectwin, 1, 1, "%d %d", dronePosition[0], dronePosition[1]);
         wrefresh(inspectwin);
+
+        // Display the drone 
         wclear(dronewin);
         box(dronewin, 0, 0);
         mvwprintw(dronewin, dronePosition[0], dronePosition[1], "+");
         wrefresh(dronewin);
+
 
         // Close all links and shutdown program
         if (flag == 1)
@@ -417,26 +441,3 @@ int main(int argc, char *argv)
 
     return 0;
 }
-
-/*
-Useful functions to use:
-1. mvprintw(y, x, "char", variable)
-2. refresh()
-3. wrefresh()
-4. clear()
-5. WINDOW * win
-6. newwin(height, width, start_y, start_x)
-7. box(win, left_and_right, top_and_bottom)
-8. wborder(win, left, right, top, bottom, tlc, blc, brc)
-9. mvwprintw(win, y, x, "char")
-10. getch()
-11. wgetch()
-12. nodelay(window, bool)
-13. timeout(milliseconds)
-*/
-
-/*
-Variables to be passes to the drone file
-1. maxX and maxY of window
-2.  
-*/

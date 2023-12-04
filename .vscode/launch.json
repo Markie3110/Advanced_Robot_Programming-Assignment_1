@@ -1,0 +1,8 @@
+{
+    "name": "C++ Launch",
+    "type": "cppdbg",
+    "request": "launch",
+    "program": "${workspaceFolder}/*",
+    "environment": [{ "name": "config", "value": "Debug" }],
+    "cwd": "${workspaceFolder}"
+  }

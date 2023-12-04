@@ -25,8 +25,8 @@ int received_response = 0;
 void watchdog_signal_handler(int signum)
 {
     received_response = 1;
-    printf("Received SIGUSR2\n");
 }
+
 
 int main(int argc, char *argv)
 {
@@ -40,7 +40,7 @@ int main(int argc, char *argv)
 
     // Create a FIFO to receive the pid from the server
     int serverpid_fd;
-    char *serverpidfifo = "/home/mark/Robotics_Masters/Advanced_Robot_Programming/Assignments/Assignment_1/tmp/serverpidfifo";
+    char *serverpidfifo = "/tmp/serverpidfifo";
     while(1)
     {
         serverpid_fd = open(serverpidfifo, O_RDONLY);
@@ -56,9 +56,10 @@ int main(int argc, char *argv)
         }
     }
 
+
     // Create a FIFO to receive the pid from the UI
     int UIpid_fd;
-    char *UIpidfifo = "/home/mark/Robotics_Masters/Advanced_Robot_Programming/Assignments/Assignment_1/tmp/UIpidfifo";
+    char *UIpidfifo = "/tmp/UIpidfifo";
     while(1)
     {
         UIpid_fd = open(UIpidfifo, O_RDONLY);
@@ -73,9 +74,10 @@ int main(int argc, char *argv)
         }
     }
 
+
     // Create a FIFO to receive the pid from the drone
     int dronepid_fd;
-    char *dronepidfifo = "/home/mark/Robotics_Masters/Advanced_Robot_Programming/Assignments/Assignment_1/tmp/dronepidfifo";
+    char *dronepidfifo = "/tmp/dronepidfifo";
     while(1)
     {
         dronepid_fd = open(dronepidfifo, O_RDONLY);
@@ -90,6 +92,7 @@ int main(int argc, char *argv)
         }
     }
 
+
     int maxfd = -1;
     int fd[3] = {serverpid_fd, UIpid_fd, dronepid_fd};
     for (int i = 0; i < 3; i++)
@@ -99,6 +102,7 @@ int main(int argc, char *argv)
             maxfd = fd[i];
         }
     }
+
 
     // Open the shared memory that transfers watchdog PID
     sem_t *sem_watchdog = sem_open(WATCHDOG_SEMAPHORE, 0);
@@ -123,6 +127,7 @@ int main(int argc, char *argv)
     int *watchdog_ptr = mmap(NULL, WATCHDOG_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_watchdog, 0);
     sem_post(sem_watchdog);
 
+
     // Write the watchdog PID to shared memory
     int pid = getpid();
     int list[1] = {pid};
@@ -130,12 +135,11 @@ int main(int argc, char *argv)
     sem_wait(sem_watchdog);
     memcpy(watchdog_ptr, list, size);
     sem_post(sem_watchdog);
-    printf("%d\n", pid);
 
-    fd_set rfds;
-    struct timeval tv;
 
     // Receive the pids from every process
+    fd_set rfds;
+    struct timeval tv;
     int server_buf[1] = {0};
     int ui_buf[1] = {0};
     int drone_buf[1] = {0};
@@ -150,6 +154,7 @@ int main(int argc, char *argv)
     {
         perror("Select() error");
     }
+
 
     // Retrieve the pids of the processes
     for (int i = 0; i < 3; i++)
@@ -173,24 +178,23 @@ int main(int argc, char *argv)
             }
         }
     }
-
-    printf("%d %d %d %d\n", server_buf[0], ui_buf[0], drone_buf[0], getsid(0));
-    //printf("%d %d %d\n", getppid(server_buf[0]), getpgid(ui_buf[0]), getpgid(drone_buf[0]));
     int pidlist[3] = {server_buf[0], ui_buf[0], drone_buf[0]};
+
 
     // Declare the variables to be used in the watchdog
     int cycles = 0;
-    //int i = 0;
     int current_pid;
 
-    sleep(5);
+
+    sleep(7);
+
 
     while(1)
     {
         for (int i = 0; i < 3; i++)
         {
             // Check if the maximum cycles has been reached
-            if (cycles == 2)
+            if (cycles == 3)
             {
                  // Send a kill signal to every pid in pidlist and kill self
                     printf("No response from %d: KILLING ALL PROCESSES\n", current_pid);
@@ -211,23 +215,21 @@ int main(int argc, char *argv)
                     raise(SIGTERM);
             }
 
+
             // Iterate through every pid in pidlist
             current_pid = pidlist[i];
-            printf("%d\n", current_pid);
+
 
             // Send a signal to the pid
             kill(current_pid, SIGUSR1);
-            printf("2\n");
             usleep(50);
-            printf("Received_response count: %d\n", received_response);
+
 
             // Wait for a certain number of cycles
             while (cycles < 2)
             {
                 // Wait a certain duration between cycles
-                printf("Cycles: %d\n", cycles);
                 usleep(DELTA_TIME_USECONDS);
-                printf("3\n");
 
                 // Check if the flag variable has changed
                 if (received_response == 1)

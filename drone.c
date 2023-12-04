@@ -14,6 +14,7 @@
 #include <sys/types.h>
 #include <poll.h>
 
+
 #define WINDOW_SIZE_SHM "/window_server"
 #define USER_INPUT_SHM "/input_server"
 #define DRONE_POSITION_SHM "/position_server"
@@ -23,31 +24,35 @@
 #define DRONE_POSITION_SEMAPHORE "/sem_drone"
 #define WATCHDOG_SEMAPHORE "/sem_watchdog"
 
+
 #define WINDOW_SHM_SIZE 3
 #define USER_SHM_SIZE 3
 #define DRONE_SHM_SIZE 5
 #define WATCHDOG_SHM_SIZE 10
+
 
 #define DELTA_TIME_USEC 100000
 #define MASS 1
 #define VISCOSITY 1
 #define INPUT_FORCE 1
 
+
 // Declare global variables
 int flag = 0; // Flag variable to clean memory, close links and quit process
 int watchdog_pid;
 
+
 void interrupt_signal_handler(int signum)
 {
     flag = 1;
-    printf("Interrupt called\n");
 }
+
 
 void watchdog_signal_handler(int signum)
 {
     kill(watchdog_pid, SIGUSR2);
-    printf("Received SIGUSR1\n");
 }
+
 
 double CalculatePositionX(int forceX, double x1, double x2)
 {
@@ -58,6 +63,7 @@ double CalculatePositionX(int forceX, double x1, double x2)
     return (num/den);
 }
 
+
 double CalculatePositionY(int forceY, double y1, double y2)
 {
     double deltatime = 0.1;
@@ -65,6 +71,7 @@ double CalculatePositionY(int forceY, double y1, double y2)
     double den = MASS + (VISCOSITY * deltatime);
     return (num/den);
 }
+
 
 int main(int argc, char *argv[])
 {
@@ -74,10 +81,12 @@ int main(int argc, char *argv[])
     act.sa_handler = &interrupt_signal_handler;
     sigaction(SIGTERM, &act, NULL); 
 
+
     struct sigaction act2;
     bzero(&act2, sizeof(act2));
     act2.sa_handler = &watchdog_signal_handler;
     sigaction(SIGUSR1, &act2, NULL);
+
 
     // Declare variables
     int droneMaxY, droneMaxX;
@@ -92,9 +101,10 @@ int main(int argc, char *argv[])
     double Y[2] = {0, 0};
     int keyvalue;
 
+
     // Create a FIFO to send the pid to the watchdog
     int dronepid_fd;
-    char *dronepidfifo = "/home/mark/Robotics_Masters/Advanced_Robot_Programming/Assignments/Assignment_1/tmp/dronepidfifo";
+    char *dronepidfifo = "/tmp/dronepidfifo";
     while(1)
     {
         if(mkfifo(dronepidfifo, 0666) == -1)
@@ -120,10 +130,12 @@ int main(int argc, char *argv[])
         printf("Opened dronepidfifo\n");
     }
 
+
     // Send the pid to the watchdog
     int pid = getpid();
     int pid_buf[1] = {pid};
     write(dronepid_fd, pid_buf, sizeof(pid_buf));
+
     
     // Create the shared memory for the watchdog PID
     sem_t *sem_watchdog = sem_open(WATCHDOG_SEMAPHORE, O_CREAT, S_IRWXU | S_IRWXG, 1);
@@ -149,6 +161,7 @@ int main(int argc, char *argv[])
     int *watchdog_ptr = mmap(NULL, WATCHDOG_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_watchdog, 0);
     sem_post(sem_watchdog);
 
+
     // Read the watchdog PID from shared memory
     int watchdog_list[1] = {0};;
     int size = sizeof(watchdog_list);
@@ -159,11 +172,11 @@ int main(int argc, char *argv[])
         sem_post(sem_watchdog);
     }
     watchdog_pid = watchdog_list[0];
-    printf("Watchdog PID: %d\n", watchdog_list[0]);
+
 
     // Open a FIFO to receive the keypressed values
     int keypressed_fd;
-    char *keypressedfifo = "/home/mark/Robotics_Masters/Advanced_Robot_Programming/Assignments/Assignment_1/tmp/keypressedfifo";
+    char *keypressedfifo = "/tmp/keypressedfifo";
     fd_set rfds;
     struct timeval tv;
     while(1)
@@ -180,6 +193,7 @@ int main(int argc, char *argv[])
         }
     }
 
+
     // Open the shared memory for the window size
     sem_t *sem_window = sem_open(WINDOW_SHM_SEMAPHORE, 0);
     if (sem_window == SEM_FAILED)
@@ -195,6 +209,7 @@ int main(int argc, char *argv[])
     int *window_ptr = mmap(NULL, WINDOW_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_window, 0);
     sem_post(sem_window);
 
+
     // Open the shared memory for the drone position
     sem_t *sem_drone = sem_open(DRONE_POSITION_SEMAPHORE, 0);
     if (sem_drone == SEM_FAILED)
@@ -209,6 +224,7 @@ int main(int argc, char *argv[])
     }
     int *drone_ptr = mmap(NULL, DRONE_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_drone, 0);
     sem_post(sem_drone);
+
 
     while(1)
     {
@@ -226,9 +242,9 @@ int main(int argc, char *argv[])
         else if (retval)
         {
             read(keypressed_fd, buf, sizeof(buf));
-            //printf("%d\n", buf[0]);
         }
         keyvalue = buf[0];
+
 
         // Receive size of window from UI
         int window_list[2];
@@ -238,36 +254,53 @@ int main(int argc, char *argv[])
         sem_post(sem_window);
         droneMaxY = window_list[0];
         droneMaxX = window_list[1];
-        //printf("%d %d\n", window_list[0], window_list[1]);
+
 
         // Calculate the drone position
-        if ((dronePosition[0] > 2) && (dronePosition[1] > 2) && (dronePosition[0] <= (droneMaxY-2)) && (dronePosition[1] <= (droneMaxX-2)))
+        if ((dronePosition[0] > 0) && (dronePosition[1] > 0) && (dronePosition[0] <= (droneMaxY-2)) && (dronePosition[1] <= (droneMaxX-2)))
         {
             dronePositionChange[0] = CalculatePositionY(forceY, Y[0], Y[1]);
             dronePositionChange[1] = CalculatePositionX(forceX, X[0], X[1]);
-            dronePosition[0] = droneStartPosition[0] + dronePositionChange[0];
-            dronePosition[1] = droneStartPosition[1] + dronePositionChange[1];
-            X[1] = X[0];
-            X[0] = dronePositionChange[1];
-            Y[1] = Y[0];
-            Y[0] = dronePositionChange[0];
-            printf("%d %d\n", dronePosition[0], dronePosition[1]);
-            printf("%d %d\n", droneMaxY, droneMaxX);
         }
-        else
+        else if (dronePosition[0] == (droneMaxY-1))
         {
-            // Remove
-            dronePositionChange[0] = CalculatePositionY(forceY, Y[0], Y[1]);
+            if (forceY < 0)
+            {
+                dronePositionChange[0] = CalculatePositionY(forceY, Y[0], Y[1]);
+            }
             dronePositionChange[1] = CalculatePositionX(forceX, X[0], X[1]);
-            dronePosition[0] = droneStartPosition[0] + dronePositionChange[0];
-            dronePosition[1] = droneStartPosition[1] + dronePositionChange[1];
-            X[1] = X[0];
-            X[0] = dronePositionChange[1];
-            Y[1] = Y[0];
-            Y[0] = dronePositionChange[0];
-            printf("%d %d\n", dronePosition[0], dronePosition[1]);
-            printf("%d %d\n", droneMaxY, droneMaxX);
         }
+        else if (dronePosition[0] == 0)
+        {
+            if (forceY > 0)
+            {
+                dronePositionChange[0] = CalculatePositionY(forceY, Y[0], Y[1]);
+            }
+            dronePositionChange[1] = CalculatePositionX(forceX, X[0], X[1]);
+        }
+        else if (dronePosition[1] == (droneMaxX - 1))
+        {
+            if (forceX < 0)
+            {
+                dronePositionChange[1] = CalculatePositionX(forceX, X[0], X[1]);
+            }
+            dronePositionChange[0] = CalculatePositionY(forceY, Y[0], Y[1]);
+        }
+        else if (dronePosition[1] == 0)
+        {
+            if (forceX > 0)
+            {
+                dronePositionChange[1] = CalculatePositionX(forceX, X[0], X[1]);
+            }
+            dronePositionChange[0] = CalculatePositionY(forceY, Y[0], Y[1]);
+        }
+        dronePosition[0] = droneStartPosition[0] + dronePositionChange[0];
+        dronePosition[1] = droneStartPosition[1] + dronePositionChange[1];
+        X[1] = X[0];
+        X[0] = dronePositionChange[1];
+        Y[1] = Y[0];
+        Y[0] = dronePositionChange[0];
+
 
         // Send drone position to UI
         size = sizeof(dronePosition);
@@ -275,57 +308,50 @@ int main(int argc, char *argv[])
         memcpy(drone_ptr, dronePosition, size);
         sem_post(sem_drone);
 
+
         // Set the force according to the key pressed
         if (keyvalue == 113)
         {
             forceX = forceX - INPUT_FORCE;
             forceY = forceY - INPUT_FORCE;
-            printf("TOP LEFT\n");
         }
         else if (keyvalue == 119)
         {
             forceY = forceY - INPUT_FORCE;
-            printf("TOP\n");
         }
         else if (keyvalue == 101)
         {
             forceX = forceX + INPUT_FORCE;
             forceY = forceY - INPUT_FORCE;
-            printf("TOP RIGHT\n");
         }
         else if (keyvalue == 97)
         {
             forceX = forceX - INPUT_FORCE;
-            printf("LEFT\n");
         }
         else if (keyvalue == 115)
         {
             forceX = 0;
             forceY = 0;
-            printf("STOP\n");
         }
         else if (keyvalue == 100)
         {
             forceX = forceX + INPUT_FORCE;
-            printf("RIGHT\n");
         }
         else if (keyvalue == 122)
         {
             forceX = forceX - INPUT_FORCE;
             forceY = forceY + INPUT_FORCE;
-            printf("BOTTOM LEFT\n");
         }
         else if (keyvalue == 120)
         {
             forceY = forceY + INPUT_FORCE;
-            printf("BOTTOM\n");
         }
         else if (keyvalue == 99)
         {
             forceX = forceX + INPUT_FORCE;
             forceY = forceY + INPUT_FORCE;
-            printf("BOTTOM RIGHT\n");
         }
+
 
         // Flag that executes if an interrupt is encountered
         if (flag == 1)
@@ -360,8 +386,8 @@ int main(int argc, char *argv[])
         return -1;
         }
 
+
         usleep(DELTA_TIME_USEC);
-        //sleep(2);
     }
 
     return 0;

@@ -28,9 +28,11 @@
 
 #define DELTA_TIME_USECONDS 100000
 
+
 // Declare global variables
 int flag = 0; // Flag variable to clean memory, close links and quit process
 int watchdog_pid;
+
 
 void interrupt_signal_handler(int signum)
 {
@@ -38,31 +40,39 @@ void interrupt_signal_handler(int signum)
     printf("Interrupt called\n");
 }
 
+
 void watchdog_signal_handler(int signum)
 {
-    printf("Received SIGUSR1\n");
-    //kill(watchdog_pid, SIGUSR2);
+    /*
+    A signal handler that sends a response back to the watchdog
+    */
+    kill(watchdog_pid, SIGUSR2);
 }
+
 
 int main(int argc, char *argv[])
 {
+    char path[200];
+    getcwd(path, 200);
+    printf("%s\n", path);
+
     // Declare a signal handler to handle an INTERRUPT SIGNAL
     struct sigaction act;
     bzero(&act, sizeof(act));
     act.sa_handler = &interrupt_signal_handler;
     sigaction(SIGTERM, &act, NULL);
 
+
+    // Declare a signal handler to handle the signals received from the watchdog
     struct sigaction act2;
     bzero(&act2, sizeof(act2));
     act2.sa_handler = &watchdog_signal_handler;
     sigaction(SIGUSR1, &act2, NULL);
 
-    int list[2];
-    int list_size = sizeof(list);
 
     // Create a FIFO to send the pid to the watchdog
     int serverpid_fd;
-    char *serverpidfifo = "/home/mark/Robotics_Masters/Advanced_Robot_Programming/Assignments/Assignment_1/tmp/serverpidfifo";
+    char *serverpidfifo = "/tmp/serverpidfifo";
     while(1)
     {
         if(mkfifo(serverpidfifo, 0666) == -1)
@@ -80,19 +90,19 @@ int main(int argc, char *argv[])
     serverpid_fd = open(serverpidfifo, O_WRONLY);
     if (serverpid_fd == -1)
     {
-        printf("Failed to open serverpidfifo\n");
+        perror("Failed to open serverpidfifo\n");
     }
     else
     {
         printf("Opened serverpidfifo\n");
     }
 
+
     // Send the pid to the watchdog
     int pid = getpid();
-    printf("%d %d\n", pid, getsid(0));
     int pid_buf[1] = {pid};
-    printf("%d\n", pid_buf[0]);
     write(serverpid_fd, pid_buf, sizeof(pid_buf));
+
 
     // Create the shared memory for the watchdog PID
     sem_t *sem_watchdog = sem_open(WATCHDOG_SEMAPHORE, O_CREAT, S_IRWXU | S_IRWXG, 1);
@@ -120,6 +130,7 @@ int main(int argc, char *argv[])
     memcpy(watchdog_ptr, buf, sizeof(buf));
     sem_post(sem_watchdog);
 
+
     // Read the watchdog PID from shared memory
     int watchdog_list[1] = {0};;
     int size = sizeof(watchdog_list);
@@ -130,7 +141,7 @@ int main(int argc, char *argv[])
         sem_post(sem_watchdog);
     }
     watchdog_pid = watchdog_list[0];
-    printf("Watchdog PID: %d\n", watchdog_list[0]);
+
 
     // Create the shared memory for the window size
     sem_t *sem_window = sem_open(WINDOW_SHM_SEMAPHORE, O_CREAT, S_IRWXU | S_IRWXG, 1);
@@ -181,7 +192,6 @@ int main(int argc, char *argv[])
     int *drone_ptr = mmap(NULL, DRONE_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_drone, 0);
     sem_post(sem_drone);
 
-    sleep(1);
 
     while (1)
     {
