@@ -16,6 +16,8 @@
 #include <fcntl.h> 
 #include <sys/stat.h> 
 #include <string.h>
+#include <errno.h>
+#include "include/log.h"
 
 #define DELTA_TIME_MILLISEC 100
 #define WINDOW_SIZE_SHM "/window_server" 
@@ -36,6 +38,8 @@
 // Declare global variables
 int flag = 0; // Flag variable to clean memory, close links and quit process
 int watchdog_pid;
+char *logpath = "Assignment_1/log/UI.log";
+FILE *logfd;
 
 
 void interrupt_signal_handler(int signum)
@@ -52,6 +56,8 @@ void watchdog_signal_handler(int signum)
 
 int main(int argc, char *argv)
 {
+    // Create a log file and open it
+    logopen(logpath);
 
     // Declare a signal handler to handle an INTERRUPT SIGNAL
     struct sigaction act;
@@ -76,11 +82,14 @@ int main(int argc, char *argv)
     noecho();
     cbreak();
     curs_set(0);
+    logmessage(logpath, "initialised ncurses");
 
 
     // Get the windows maximum height and width
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
+    logint(logpath, "initial yMax", yMax);
+    logint(logpath, "initial xMax", xMax);
 
 
     char *s = "DRONE WINDOW";
@@ -111,6 +120,8 @@ int main(int argc, char *argv)
     // Maximum positions for drone
     droneMaxY = droneWin_height;
     droneMaxX = droneWin_width;
+    logint(logpath, "droneMaxY", droneMaxY);
+    logint(logpath, "droneMaxX", droneMaxX);
 
 
     int dimList[9] = {droneWin_height, droneWin_width, droneWin_startY, droneWin_startX, inspWin_height, inspWin_width, inspWin_startY, inspWin_startX};
@@ -119,20 +130,19 @@ int main(int argc, char *argv)
     // Intialise the interface
     dronewin = newwin(dimList[0], dimList[1], dimList[2], dimList[3]);
     mvprintw(dimList[0]+1, 2, "List of commands:");
-    char *s1 = "Start: J    ";
-    char *s2 = "Reset: K    ";
-    char *s3 = "Quit: L     ";
-    char *s4 = "Stop: S     ";
-    char *s5 = "Left: A     ";
-    char *s6 = "Right: D    ";
-    char *s7 = "Top: W      ";
-    char *s8 = "Bottom: X   ";
-    char *s9 =  "Top-Left: Q    ";
-    char *s10=  "Top-Right: E   ";
-    char *s11 = "Bottom-Left: Z ";
-    char *s12 = "Bottom-Right: C";
-    mvprintw(dimList[0]+2, 2, "%s %s %s", s1, s2, s3);
-    mvprintw(dimList[0]+3, 2, "%s %s %s %s %s %s %s %s %s", s4, s5, s6, s7, s8, s9, s10, s11, s12);
+    char *s1 = "Reset: K    ";
+    char *s2 = "Quit: L     ";
+    char *s3 = "Stop: S     ";
+    char *s4 = "Left: A     ";
+    char *s5 = "Right: D    ";
+    char *s6 = "Top: W      ";
+    char *s7 = "Bottom: X   ";
+    char *s8 =  "Top-Left: Q    ";
+    char *s9=  "Top-Right: E   ";
+    char *s10 = "Bottom-Left: Z ";
+    char *s11 = "Bottom-Right: C";
+    mvprintw(dimList[0]+2, 2, "%s %s", s1, s2);
+    mvprintw(dimList[0]+3, 2, "%s %s %s %s %s %s %s %s %s", s3, s4, s5, s6, s7, s8, s9, s10, s11);
     mvprintw(dimList[6] - 1, 2, "INSPECTOR WINDOW");
     inspectwin = newwin(dimList[4], dimList[5], dimList[6], dimList[7]);
     box(dronewin, 0, 0);
@@ -149,16 +159,12 @@ int main(int argc, char *argv)
     {
         if(mkfifo(UIpidfifo, 0666) == -1)
         {
-            werase(inspectwin);
-            box(inspectwin, 0, 0);
-            mvwprintw(inspectwin, 1, 1, "Failed to create UIpidfifo");
+            logerror(logpath, "error: UIpidfifo create", errno);
             remove(UIpidfifo);
         }
         else
         {
-            werase(inspectwin);
-            box(inspectwin, 0, 0);
-            mvwprintw(inspectwin, 1, 1, "Created UIpidfifo");
+            logmessage(logpath, "Created UIpidfifo");
             break;
         }
         usleep(10);
@@ -166,11 +172,11 @@ int main(int argc, char *argv)
     UIpid_fd = open(UIpidfifo, O_WRONLY);
     if (UIpid_fd == -1)
     {
-        printf("Failed to open UIpidfifo\n");
+        logerror(logpath, "error: UIpidfifo open", errno);
     }
     else
     {
-        printf("Opened UIpidfifo\n");
+        logmessage(logpath, "Opened UIpidfifo");
     }
 
 
@@ -178,27 +184,40 @@ int main(int argc, char *argv)
     int pid = getpid();
     int pid_buf[1] = {pid};
     write(UIpid_fd, pid_buf, sizeof(pid_buf));
+    logmessage(logpath, "Sent pid to watchdog");
 
 
-    // Create the shared memory for the watchdog PID
+    // Open the shared memory for the watchdog PID
     sem_t *sem_watchdog = sem_open(WATCHDOG_SEMAPHORE, O_CREAT, S_IRWXU | S_IRWXG, 1);
-    if (sem_watchdog == SEM_FAILED)
+    while(1)
     {
-        perror("Failed to create sem_watchdog");
+        if (sem_watchdog == SEM_FAILED)
+        {
+            logerror(logpath, "error: sem_watchdog open", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened sem_watchdog");
+            break;
+        }
+        usleep(10);
     }
-    else
+    int shm_watchdog;
+    while(1)
     {
-        printf("Created sem_watchdog\n");
-    }
-    sem_init(sem_watchdog, 1, 0);
-    int shm_watchdog = shm_open(WATCHDOG_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
-    if (shm_watchdog == -1)
-    {
-        perror("Failed to create shm_watchdog");
-    }
-    else
-    {
-        printf("Created shm_watchdog\n");
+        sem_init(sem_watchdog, 1, 0);
+        shm_watchdog = shm_open(WATCHDOG_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
+        if (shm_watchdog == -1)
+        {
+            logerror(logpath, "error: shm_watchdog open", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened shm_watchdog");
+            break;
+        }
+        sem_post(sem_watchdog);
+        usleep(10);
     }
     ftruncate(shm_watchdog, DRONE_SHM_SIZE);
     int *watchdog_ptr = mmap(NULL, WATCHDOG_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_watchdog, 0);
@@ -213,10 +232,11 @@ int main(int argc, char *argv)
         sem_wait(sem_watchdog);
         memcpy(watchdog_list, watchdog_ptr, size);
         sem_post(sem_watchdog);
+        usleep(10);
     }
     watchdog_pid = watchdog_list[0];
-    mvwprintw(inspectwin, 1, 1, "Watchdog PID: %d", watchdog_pid);
-    wrefresh(inspectwin);
+    logmessage(logpath, "received watchdog pid");
+    logint(logpath, "watchdog_pid", watchdog_pid);
 
 
     // Create a FIFO to pass the keypressed values to the drone
@@ -226,16 +246,12 @@ int main(int argc, char *argv)
     {
         if(mkfifo(keypressedfifo, 0666) == -1)
         {
-            werase(inspectwin);
-            box(inspectwin, 0, 0);
-            mvwprintw(inspectwin, 1, 1, "Failed to create keypressedfifo");
+            logerror(logpath, "error: keypressedfifo create", errno);
             remove(keypressedfifo);
         }
         else
         {
-            werase(inspectwin);
-            box(inspectwin, 0, 0);
-            mvwprintw(inspectwin, 1, 1, "Created keypressedfifo");
+            logmessage(logpath, "Created keypressedfifo");
             break;
         }
         usleep(10);
@@ -243,29 +259,41 @@ int main(int argc, char *argv)
     keypressed_fd = open(keypressedfifo, O_WRONLY);
     if (keypressed_fd == -1)
     {
-        werase(inspectwin);
-        box(inspectwin, 0, 0);
-        mvwprintw(inspectwin, 1, 1, "Failed to open keypressedfifo");
+        logerror(logpath, "errorL keypressedfio open", errno);
     }
 
 
-    // Create the shared memory for the window size
-    sem_t *sem_window = sem_open(WINDOW_SHM_SEMAPHORE, 0);
-    if (sem_window == SEM_FAILED)
+    // Open the shared memory for the window size
+    sem_t *sem_window;
+    while(1)
     {
-        werase(inspectwin);
-        box(inspectwin, 0, 0);
-        perror("Failed to open sem_window");
-        mvwprintw(inspectwin, 1, 1, "Failed to open sem_window");
+        sem_window = sem_open(WINDOW_SHM_SEMAPHORE, 0);
+        if (sem_window == SEM_FAILED)
+        {
+            logerror(logpath, "error: open sem_window", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened sem_window");
+            break;
+        }
     }
-    sem_wait(sem_window);
-    int shm_window = shm_open(WINDOW_SIZE_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
-    if (shm_window == -1)
+    int shm_window;
+    while(1)
     {
-        werase(inspectwin);
-        box(inspectwin, 0, 0);
-        perror("Failed to open shm_window");
-        mvwprintw(inspectwin, 1, 1, "Failed to open shm_window");
+        sem_wait(sem_window);
+        shm_window = shm_open(WINDOW_SIZE_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
+        if (shm_window == -1)
+        {
+            logerror(logpath, "error: open shm_window", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened shm_window");
+            break;
+        }
+        sem_post(sem_window);
+        usleep(10);
     }
     int *window_ptr = mmap(NULL, WINDOW_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_window, 0);
     sem_post(sem_window);
@@ -273,22 +301,37 @@ int main(int argc, char *argv)
 
 
     // Open the shared memory for drone position
-    sem_t *sem_drone = sem_open(DRONE_POSITION_SEMAPHORE, 0);
-    if (sem_drone == SEM_FAILED)
+    sem_t *sem_drone;
+    while(1)
     {
-        werase(inspectwin);
-        box(inspectwin, 0, 0);
-        perror("Failed to open sem_drone");
-        mvwprintw(inspectwin, 1, 1, "Failed to open sem_drone");
+        sem_drone = sem_open(DRONE_POSITION_SEMAPHORE, 0);
+        if (sem_drone == SEM_FAILED)
+        {
+            logerror(logpath, "error: open sem_drone", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened sem_drone");
+            break;
+        }
+        usleep(10);
     }
-    sem_init(sem_drone, 1, 0);
-    int shm_drone = shm_open(DRONE_POSITION_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
-    if (shm_drone == -1)
+    int shm_drone;
+    while(1)
     {
-        werase(inspectwin);
-        box(inspectwin, 0, 0);
-        perror("Failed to open shm_drone");
-        mvwprintw(inspectwin, 1, 1, "Failed to open shm_drone");
+        sem_init(sem_drone, 1, 0);
+        shm_drone = shm_open(DRONE_POSITION_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
+        if (shm_drone == -1)
+        {
+            logerror(logpath, "error: open shm_drone", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened shm_drone");
+            break;
+        }
+        sem_post(sem_drone);
+        usleep(10);
     }
     int *drone_ptr = mmap(NULL, DRONE_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_drone, 0);
     sem_post(sem_drone);
@@ -300,6 +343,7 @@ int main(int argc, char *argv)
         // Grab the input for the current timecycle
         wtimeout(dronewin, DELTA_TIME_MILLISEC);
         int c = wgetch(dronewin);
+        logint(logpath, "user input", c);
 
 
         // Pass on the user input to the drone file  
@@ -307,6 +351,7 @@ int main(int argc, char *argv)
         {
             int buf[1] = {c};
             write(keypressed_fd, buf, sizeof(buf));
+            logmessage(logpath, "passed input to drone");
         }
 
 
@@ -317,11 +362,14 @@ int main(int argc, char *argv)
         memcpy(window_ptr, list, size);
         sem_post(sem_window);
         wrefresh(inspectwin);
+        logmessage(logpath, "passed window size to drone");
 
 
         // Check if the window has been resized
         int yMax_now, xMax_now;
         getmaxyx(stdscr, yMax_now, xMax_now);
+        logint(logpath, "yMax_now", yMax_now);
+        logint(logpath, "xMax_now", xMax_now);
         if ((yMax_now != yMax) || (xMax_now != xMax))
         {
             yMax = yMax_now;
@@ -355,20 +403,19 @@ int main(int argc, char *argv)
             mvwin(dronewin, dimList[2], dimList[3]);
             wresize(dronewin, dimList[0], dimList[1]);
             mvprintw(dimList[0]+1, 2, "List of commands:");
-            char *s1 = "Start: J    ";
-            char *s2 = "Reset: K    ";
-            char *s3 = "Quit: L     ";
-            char *s4 = "Stop: S     ";
-            char *s5 = "Left: A     ";
-            char *s6 = "Right: D    ";
-            char *s7 = "Top: W      ";
-            char *s8 = "Bottom: X   ";
-            char *s9 =  "Top-Left: Q    ";
-            char *s10=  "Top-Right: E   ";
-            char *s11 = "Bottom-Left: Z ";
-            char *s12 = "Bottom-Right: C";
-            mvprintw(dimList[0]+2, 2, "%s %s %s", s1, s2, s3);
-            mvprintw(dimList[0]+3, 2, "%s %s %s %s %s %s %s %s %s", s4, s5, s6, s7, s8, s9, s10, s11, s12);
+            char *s1 = "Reset: K    ";
+            char *s2 = "Quit: L     ";
+            char *s3 = "Stop: S     ";
+            char *s4 = "Left: A     ";
+            char *s5 = "Right: D    ";
+            char *s6 = "Top: W      ";
+            char *s7 = "Bottom: X   ";
+            char *s8 =  "Top-Left: Q    ";
+            char *s9=  "Top-Right: E   ";
+            char *s10 = "Bottom-Left: Z ";
+            char *s11 = "Bottom-Right: C";
+            mvprintw(dimList[0]+2, 2, "%s %s", s1, s2);
+            mvprintw(dimList[0]+3, 2, "%s %s %s %s %s %s %s %s %s", s3, s4, s5, s6, s7, s8, s9, s10, s11);
             mvprintw(dimList[6] - 1, 2, "INSPECTOR WINDOW");
             wresize(inspectwin, 1, 1);
             mvwin(inspectwin, dimList[6], dimList[7]);
@@ -394,6 +441,9 @@ int main(int argc, char *argv)
         box(inspectwin, 0, 0);
         mvwprintw(inspectwin, 1, 1, "%d %d", dronePosition[0], dronePosition[1]);
         wrefresh(inspectwin);
+        logint(logpath, "dronePositionY", dronePositionY);
+        logint(logpath, "dronePositionX", dronePositionX);
+
 
         // Display the drone 
         wclear(dronewin);

@@ -12,6 +12,8 @@
 #include <strings.h>
 #include <sys/time.h>
 #include <sys/types.h>
+#include <errno.h>
+#include "include/log.h"
 
 #define WATCHDOG_SHM "/watchdog_server"
 #define WATCHDOG_SEMAPHORE "/sem_watchdog"
@@ -21,6 +23,20 @@
 
 // Define global variables
 int received_response = 0;
+int server_buf[1] = {0};
+int ui_buf[1] = {0};
+int drone_buf[1] = {0};
+sem_t *sem_watchdog;
+FILE *logfd;
+char *logpath = "Assignment_1/log/watchdog.log";
+
+void terminate_signal_handler(int signum)
+{
+    kill(getppid(), SIGUSR1);
+    kill(ui_buf[0], SIGTERM);
+    kill(server_buf[0], SIGTERM);
+    kill(drone_buf[0], SIGTERM);
+}
 
 void watchdog_signal_handler(int signum)
 {
@@ -30,6 +46,9 @@ void watchdog_signal_handler(int signum)
 
 int main(int argc, char *argv)
 {
+    // Open the log file
+    logopen(logpath);
+    
     // Declare the required variables
     int received_pids = 0;
 
@@ -37,6 +56,11 @@ int main(int argc, char *argv)
     bzero(&act, sizeof(act));
     act.sa_handler = &watchdog_signal_handler;
     sigaction(SIGUSR2, &act, NULL);
+
+    struct sigaction act2;
+    bzero(&act2, sizeof(act2));
+    act2.sa_handler = &terminate_signal_handler;
+    sigaction(SIGUSR1, &act2, NULL);
 
 
     // Create a FIFO to receive the pid from the server
@@ -47,15 +71,14 @@ int main(int argc, char *argv)
         serverpid_fd = open(serverpidfifo, O_RDONLY);
         if (serverpid_fd == -1)
         {
-            perror("Failed to open serverpidfifo\n");
-            printf("Not opened\n");
-
+            logerror(logpath, "error: serverpidfifo open", errno);
         }
         else
         {
-            printf("Opened serverpidfifo\n");
+            logmessage(logpath, "Opened serverpidfifo");
             break;
         }
+        usleep(10);
     }
 
 
@@ -67,13 +90,14 @@ int main(int argc, char *argv)
         UIpid_fd = open(UIpidfifo, O_RDONLY);
         if (UIpid_fd == -1)
         {
-            printf("Failed to open UIpidfifo\n");
+            logerror(logpath, "error: UIpidfifo open", errno);
         }
         else
         {
-            printf("Opened UIpidfifo\n");
+            logmessage(logpath, "Opened UIpidfifo");
             break;
         }
+        usleep(10);
     }
 
 
@@ -85,13 +109,14 @@ int main(int argc, char *argv)
         dronepid_fd = open(dronepidfifo, O_RDONLY);
         if (dronepid_fd == -1)
         {
-            printf("Failed to open dronepidfifo\n");
+            logerror(logpath, "error: dronepidfifo", errno);
         }
         else
         {
-            printf("Opened dronepidfifo\n");
+            logmessage(logpath, "Opened dronepidfifo");
             break;
         }
+        usleep(10);
     }
 
 
@@ -107,24 +132,35 @@ int main(int argc, char *argv)
 
 
     // Open the shared memory that transfers watchdog PID
-    sem_t *sem_watchdog = sem_open(WATCHDOG_SEMAPHORE, 0);
-    if (sem_watchdog == SEM_FAILED)
+    while(1)
     {
-        perror("Failed to create sem_watchdog");
+        sem_watchdog = sem_open(WATCHDOG_SEMAPHORE, 0);
+        if (sem_watchdog == SEM_FAILED)
+        {
+            logerror(logpath, "error: sem_wathcdog open", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened sem_watchdog");
+            break;
+        }
     }
-    else
+    int shm_watchdog;
+    while(1)
     {
-        printf("Created sem_watchdog\n");
-    }
-    sem_wait(sem_watchdog);
-    int shm_watchdog = shm_open(WATCHDOG_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
-    if (shm_watchdog == -1)
-    {
-        perror("Failed to create shm_watchdog");
-    }
-    else
-    {
-        printf("Created shm_watchdog\n");
+        sem_wait(sem_watchdog);
+        shm_watchdog = shm_open(WATCHDOG_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
+        if (shm_watchdog == -1)
+        {
+            logerror(logpath, "error: shm_watchdog open", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened shm_watchdog");
+            break;
+        }
+        sem_post(sem_watchdog);
+        usleep(10);
     }
     int *watchdog_ptr = mmap(NULL, WATCHDOG_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_watchdog, 0);
     sem_post(sem_watchdog);
@@ -137,14 +173,13 @@ int main(int argc, char *argv)
     sem_wait(sem_watchdog);
     memcpy(watchdog_ptr, list, size);
     sem_post(sem_watchdog);
+    logint(logpath, "watchdog pid", pid);
+    logmessage(logpath, "sent watchdog pid to processes");
 
 
     // Receive the pids from every process
     fd_set rfds;
     struct timeval tv;
-    int server_buf[1] = {0};
-    int ui_buf[1] = {0};
-    int drone_buf[1] = {0};
     FD_ZERO(&rfds);
     FD_SET(serverpid_fd, &rfds);
     FD_SET(UIpid_fd, &rfds);
@@ -154,7 +189,7 @@ int main(int argc, char *argv)
     int retval = select((maxfd+1), &rfds, NULL, NULL, &tv);
     if (retval == -1)
     {
-        perror("Select() error");
+        logerror(logpath, "error: select", errno);
     }
 
 
@@ -181,6 +216,9 @@ int main(int argc, char *argv)
         }
     }
     int pidlist[3] = {server_buf[0], ui_buf[0], drone_buf[0]};
+    logint(logpath, "server pid", pidlist[0]);
+    logint(logpath, "UI pid", pidlist[1]);
+    logint(logpath, "drone pid", pidlist[2]);
 
 
     // Declare the variables to be used in the watchdog
@@ -188,7 +226,7 @@ int main(int argc, char *argv)
     int current_pid;
 
 
-    sleep(15);
+    sleep(3);
 
 
     while(1)
@@ -199,7 +237,9 @@ int main(int argc, char *argv)
             if (cycles == 3)
             {
                  // Send a kill signal to every pid in pidlist and kill self
-                    printf("No response from %d: KILLING ALL PROCESSES\n", current_pid);
+                    char str[100];
+                    sprintf(str, "No response from %d: KILLING ALL PROCESSES", current_pid);
+                    logmessage(logpath, str);
                     kill(getppid(), SIGUSR1);
                     kill(ui_buf[0], SIGTERM);
                     kill(server_buf[0], SIGTERM);
@@ -210,7 +250,7 @@ int main(int argc, char *argv)
                     munmap(watchdog_ptr, WATCHDOG_SHM_SIZE);
                     if (shm_unlink(WATCHDOG_SHM) == -1)
                     {
-                        perror("Failed to close window_shm");
+                        logerror(logpath, "error: window_shm close", errno);
                         return -1;
                     }
 
@@ -220,15 +260,19 @@ int main(int argc, char *argv)
 
             // Iterate through every pid in pidlist
             current_pid = pidlist[i];
+            logint(logpath, "current pid", current_pid);
 
 
             // Send a signal to the pid
+            char str[100];
             kill(current_pid, SIGUSR1);
+            sprintf(str, "sent SIGUSR1 to %d", current_pid);
+            logmessage(logpath, str);
             usleep(50);
 
 
             // Wait for a certain number of cycles
-            while (cycles < 2)
+            while (cycles < 3)
             {
                 // Wait a certain duration between cycles
                 usleep(DELTA_TIME_USECONDS);
@@ -237,7 +281,8 @@ int main(int argc, char *argv)
                 if (received_response == 1)
                 {
                     // Reset all variables and move to next pid
-                    printf("Received\n");
+                    sprintf(str, "received response from %d", current_pid);
+                    logmessage(logpath, str);
                     cycles = 0;
                     received_response = 0;
                     break;
@@ -247,6 +292,7 @@ int main(int argc, char *argv)
                     // Increment cycle count
                     cycles++;
                 }
+                logint(logpath, "cycles", cycles);
             }
         }
     }

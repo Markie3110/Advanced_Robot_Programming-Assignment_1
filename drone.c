@@ -13,6 +13,8 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <poll.h>
+#include <errno.h>
+#include "include/log.h"
 
 
 #define WINDOW_SIZE_SHM "/window_server"
@@ -40,28 +42,40 @@
 // Declare global variables
 int flag = 0; // Flag variable to clean memory, close links and quit process
 int watchdog_pid;
+char *logpath = "Assignment_1/log/drone.log";
+FILE *logfd;
 
 
 void interrupt_signal_handler(int signum)
 {
+    logmessage(logpath ,"Received SIGTERM\n");
     flag = 1;
 }
 
 
 void watchdog_signal_handler(int signum)
 {
-    printf("Received SIGUSR1\n");
+    /*
+    A signal handler that sends a response back to the watchdog.
+    */
+
     kill(watchdog_pid, SIGUSR2);
+
 }
 
 
 double CalculatePositionX(int forceX, double x1, double x2)
 {
+    /*
+    Calculates the X position of the drone using the positions the drone occupied in the previous two time intervals, x1(one time interval) and 
+    (two time intervals) x2 respectively.
+    */
+
     double deltatime = 0.1;
     double num = (forceX*(deltatime*deltatime)) - (MASS * x2) + (2 * MASS * x1) + (VISCOSITY * deltatime * x1);
     double den = MASS + (VISCOSITY * deltatime);
-    printf("%f\n", (num/den));
     return (num/den);
+    
 }
 
 
@@ -76,13 +90,17 @@ double CalculatePositionY(int forceY, double y1, double y2)
 
 int main(int argc, char *argv[])
 {
+    // Create a log file and open it
+    logopen(logpath);
+
+
     // Declare a signal handler to handle an INTERRUPT SIGNAL
     struct sigaction act;
     bzero(&act, sizeof(act));
     act.sa_handler = &interrupt_signal_handler;
     sigaction(SIGTERM, &act, NULL); 
 
-
+    // Declare a signal handler to handle a SIGUSR1 signal sent from the watchdog
     struct sigaction act2;
     bzero(&act2, sizeof(act2));
     act2.sa_handler = &watchdog_signal_handler;
@@ -110,25 +128,24 @@ int main(int argc, char *argv[])
     {
         if(mkfifo(dronepidfifo, 0666) == -1)
         {
-            perror("Failed to create dronepidfifo");
+            logerror(logpath, "error: dronepidfifo creation", errno);
             remove(dronepidfifo);
         }
         else
         {
-            printf("Created dronepidfifo\n");
+            logmessage(logpath, "Created dronepidfifo");
             break;
         }
         usleep(10);
     }
-    printf("Hi\n");
     dronepid_fd = open(dronepidfifo, O_WRONLY);
     if (dronepid_fd == -1)
     {
-        perror("Failed to open dronepidfifo\n");
+        logerror(logpath, "error: dronepidfifo open", errno);
     }
     else
     {
-        printf("Opened dronepidfifo\n");
+        logmessage(logpath, "Opened dronepidfifo");
     }
 
 
@@ -136,27 +153,40 @@ int main(int argc, char *argv[])
     int pid = getpid();
     int pid_buf[1] = {pid};
     write(dronepid_fd, pid_buf, sizeof(pid_buf));
+    logint(logpath, "Drone PID", pid);
 
     
-    // Create the shared memory for the watchdog PID
-    sem_t *sem_watchdog = sem_open(WATCHDOG_SEMAPHORE, O_CREAT, S_IRWXU | S_IRWXG, 1);
-    if (sem_watchdog == SEM_FAILED)
+    // Open the shared memory for the watchdog PID
+    sem_t *sem_watchdog;
+    while(1)
     {
-        perror("Failed to create sem_watchdog");
+        sem_watchdog = sem_open(WATCHDOG_SEMAPHORE, O_CREAT, S_IRWXU | S_IRWXG, 1);
+        if (sem_watchdog == SEM_FAILED)
+        {
+            logerror(logpath, "error: sem_watchdog open", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened sem_watchdog");
+            break;
+        }
     }
-    else
+    int shm_watchdog;
+    while(1)
     {
-        printf("Created sem_watchdog\n");
-    }
-    sem_init(sem_watchdog, 1, 0);
-    int shm_watchdog = shm_open(WATCHDOG_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
-    if (shm_watchdog == -1)
-    {
-        perror("Failed to create shm_watchdog");
-    }
-    else
-    {
-        printf("Created shm_watchdog\n");
+        sem_init(sem_watchdog, 1, 0);
+        shm_watchdog = shm_open(WATCHDOG_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
+        if (shm_watchdog == -1)
+        {
+            logerror(logpath, "error: shm_watchdog open", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened shm_watchdog");
+            break;
+        }
+        sem_post(sem_watchdog);
+        usleep(10);
     }
     ftruncate(shm_watchdog, DRONE_SHM_SIZE);
     int *watchdog_ptr = mmap(NULL, WATCHDOG_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_watchdog, 0);
@@ -171,8 +201,11 @@ int main(int argc, char *argv[])
         sem_wait(sem_watchdog);
         memcpy(watchdog_list, watchdog_ptr, size);
         sem_post(sem_watchdog);
+        usleep(10);
     }
     watchdog_pid = watchdog_list[0];
+    logmessage(logpath, "received watchdog pid");
+    logint(logpath, "Watchdog PID", watchdog_pid);
 
 
     // Open a FIFO to receive the keypressed values
@@ -185,43 +218,83 @@ int main(int argc, char *argv[])
         keypressed_fd = open(keypressedfifo, O_RDONLY);
         if (keypressed_fd == -1)
         {
-            perror("Failed to open keypressedfifo");
+            logerror(logpath, "error: keypressedfifo open", errno);
         }
         else
         {
-            printf("Opened keypressedfifo\n");
+            logmessage(logpath, "Opened keypressedfifo");
             break;
         }
     }
 
 
     // Open the shared memory for the window size
-    sem_t *sem_window = sem_open(WINDOW_SHM_SEMAPHORE, 0);
-    if (sem_window == SEM_FAILED)
+    sem_t *sem_window;
+    while(1)
     {
-        perror("Drone - Failed to open sem_window");
+        sem_window = sem_open(WINDOW_SHM_SEMAPHORE, 0);
+        if (sem_window == SEM_FAILED)
+        {
+            logerror(logpath, "error: sem_window open", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened sem_window");
+            break;
+        }
     }
-    sem_wait(sem_window);
-    int shm_window = shm_open(WINDOW_SIZE_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
-    if (shm_window == -1)
+    int shm_window;
+    while(1)
     {
-        perror("Drone - Failed to create shm_window");
+        sem_wait(sem_window);
+        shm_window = shm_open(WINDOW_SIZE_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
+        if (shm_window == -1)
+        {
+            logerror(logpath, "error: shm_window open", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened shm_window");
+            break;
+        }
+        sem_post(sem_window);
+        usleep(10);
     }
     int *window_ptr = mmap(NULL, WINDOW_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_window, 0);
     sem_post(sem_window);
 
 
     // Open the shared memory for the drone position
-    sem_t *sem_drone = sem_open(DRONE_POSITION_SEMAPHORE, 0);
-    if (sem_drone == SEM_FAILED)
+    sem_t *sem_drone;
+    while(1)
     {
-        perror("Drone - Failed to open sem_drone");
+        sem_drone = sem_open(DRONE_POSITION_SEMAPHORE, 0);
+        if (sem_drone == SEM_FAILED)
+        {
+            logerror(logpath, "error: sem_drone open", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened sem_drone");
+            break;
+        }
     }
-    sem_init(sem_drone, 1, 0);
-    int shm_drone = shm_open(DRONE_POSITION_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
-    if (shm_drone == -1)
+    int shm_drone;
+    while(1)
     {
-        perror("Drone - Failed to create shm_drone");
+        sem_init(sem_drone, 1, 0);
+        shm_drone = shm_open(DRONE_POSITION_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
+        if (shm_drone == -1)
+        {
+            logerror(logpath, "error: shm_drone open", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened shm_drone");
+            break;
+        }
+        sem_post(sem_drone);
+        usleep(10);
     }
     int *drone_ptr = mmap(NULL, DRONE_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_drone, 0);
     sem_post(sem_drone);
@@ -238,13 +311,14 @@ int main(int argc, char *argv[])
         int retval = select((keypressed_fd+1), &rfds, NULL, NULL, &tv);
         if (retval == -1)
         {
-            perror("Select() error");
+            logerror(logpath, "error: select", errno);
         }
         else if (retval)
         {
             read(keypressed_fd, buf, sizeof(buf));
         }
         keyvalue = buf[0];
+        logint(logpath, "keyvalue", keyvalue);
 
 
         // Receive size of window from UI
@@ -255,6 +329,8 @@ int main(int argc, char *argv[])
         sem_post(sem_window);
         droneMaxY = window_list[0];
         droneMaxX = window_list[1];
+        logint(logpath, "droneMaxY", droneMaxY);
+        logint(logpath, "droneMaxX", droneMaxX);
 
 
         // Calculate the drone position
@@ -297,6 +373,10 @@ int main(int argc, char *argv[])
         }
         dronePosition[0] = droneStartPosition[0] + dronePositionChange[0];
         dronePosition[1] = droneStartPosition[1] + dronePositionChange[1];
+        logint(logpath, "DronePositionY", dronePosition[0]);
+        logint(logpath, "DronePositionY", dronePosition[1]);
+        logint(logpath, "ForceY", forceY);
+        logint(logpath, "forceX", forceX);
         X[1] = X[0];
         X[0] = dronePositionChange[1];
         Y[1] = Y[0];
@@ -308,6 +388,7 @@ int main(int argc, char *argv[])
         sem_wait(sem_drone);
         memcpy(drone_ptr, dronePosition, size);
         sem_post(sem_drone);
+        logmessage(logpath, "Sent dronepos to UI");
 
 
         // Set the force according to the key pressed
@@ -357,13 +438,15 @@ int main(int argc, char *argv[])
         // Flag that executes if an interrupt is encountered
         if (flag == 1)
         {
+            logmessage(logpath, "closing links and pipes");
+
             sem_close(sem_window);
             sem_unlink(WINDOW_SHM_SEMAPHORE);
             munmap(window_ptr, WINDOW_SHM_SIZE);
             if (shm_unlink(WINDOW_SIZE_SHM) == -1)
             {
                 perror("Drone - Failed to close window_shm");
-                printf("Drone - Failed to close window_shm\n");
+                logerror(logpath, "error: window_shm close", errno);
             }
 
             close(keypressed_fd);
@@ -375,6 +458,7 @@ int main(int argc, char *argv[])
             if (shm_unlink(DRONE_POSITION_SHM) == -1)
             {
                 perror("Failed to close window_shm");
+                logerror(logpath, "error: drone_shm close", errno);
                 return -1;
             }
 

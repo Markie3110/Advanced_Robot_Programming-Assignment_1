@@ -12,7 +12,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <errno.h>
-//#include "include/timestamp.h"
+#include "include/log.h"
 
 #define WINDOW_SIZE_SHM "/window_server"
 #define USER_INPUT_SHM "/input_server"
@@ -34,6 +34,8 @@
 // Declare global variables
 int flag = 0; // Flag variable to clean memory, close links and quit process
 int watchdog_pid;
+FILE *logfd;
+char *logpath = "Assignment_1/log/server.log";
 
 
 void interrupt_signal_handler(int signum)
@@ -47,26 +49,14 @@ void watchdog_signal_handler(int signum)
     /*
     A signal handler that sends a response back to the watchdog
     */
-    printf("Received SIGUSR1\n");
     kill(watchdog_pid, SIGUSR2);
 }
 
 
 int main(int argc, char *argv[])
 {
-    // char *now = current_time();
-    // printf("%s\n", now);
-
-    char path[200];
-    getcwd(path, 200);
-    printf("%s\n", path);
-    
-
-    // Declare a signal handler to handle an INTERRUPT SIGNAL
-    struct sigaction act;
-    bzero(&act, sizeof(act));
-    act.sa_handler = &interrupt_signal_handler;
-    sigaction(SIGTERM, &act, NULL);
+    // Create a log file and open it
+    logopen(logpath);
 
 
     // Declare a signal handler to handle the signals received from the watchdog
@@ -85,28 +75,25 @@ int main(int argc, char *argv[])
         {
             if (errno != EEXIST)
             {
-                perror("Failed to create serverpidfifo\n");
+                logerror(logpath, "error: serverpidfifo create", errno);
                 remove(serverpidfifo);
             }
         }
         else
         {
-            printf("Created serverpidfifo\n");
+            logmessage(logpath, "Created serverpidfifo");
             break;  
         }
-        usleep(10);
-    }
-    while (access(serverpidfifo, F_OK) == -1) {
         usleep(10);
     }
     serverpid_fd = open(serverpidfifo, O_WRONLY);
     if (serverpid_fd == -1)
     {
-        perror("Failed to open serverpidfifo\n");
+        logerror(logpath, "error: serverpidfifo open", errno);
     }
     else
     {
-        printf("Opened serverpidfifo\n");
+        logmessage(logpath, "Opened serverpidfifo");
     }
 
 
@@ -114,27 +101,35 @@ int main(int argc, char *argv[])
     int pid = getpid();
     int pid_buf[1] = {pid};
     write(serverpid_fd, pid_buf, sizeof(pid_buf));
+    logmessage(logpath, "sent pid to watchdog");
 
 
-    // Create the shared memory for the watchdog PID
+    // Open the shared memory for the watchdog PID
     sem_t *sem_watchdog = sem_open(WATCHDOG_SEMAPHORE, O_CREAT, S_IRWXU | S_IRWXG, 1);
     if (sem_watchdog == SEM_FAILED)
     {
-        perror("Failed to create sem_watchdog");
+        logerror(logpath, "error: sem_watchdog open", errno);
     }
     else
     {
-        printf("Created sem_watchdog\n");
+        logmessage(logpath, "Opened sem_watchdog");
     }
-    sem_init(sem_watchdog, 1, 0);
-    int shm_watchdog = shm_open(WATCHDOG_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
-    if (shm_watchdog == -1)
+    int shm_watchdog;
+    while(1)
     {
-        perror("Failed to create shm_watchdog");
-    }
-    else
-    {
-        printf("Created shm_watchdog\n");
+        sem_init(sem_watchdog, 1, 0);
+        shm_watchdog = shm_open(WATCHDOG_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
+        if (shm_watchdog == -1)
+        {
+            logerror(logpath, "error: shm_watchdog open", errno);
+        }
+        else
+        {
+            logmessage(logpath, "Opened shm_watchdog");
+            break;
+        }
+        sem_post(sem_watchdog);
+        usleep(10);
     }
     ftruncate(shm_watchdog, DRONE_SHM_SIZE);
     int *watchdog_ptr = mmap(NULL, WATCHDOG_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_watchdog, 0);
@@ -151,29 +146,32 @@ int main(int argc, char *argv[])
         sem_wait(sem_watchdog);
         memcpy(watchdog_list, watchdog_ptr, size);
         sem_post(sem_watchdog);
+        usleep(10);
     }
     watchdog_pid = watchdog_list[0];
+    logmessage(logpath, "received watchdog pid");
+    logint(logpath, "watchdog_pid", watchdog_pid);
 
 
     // Create the shared memory for the window size
     sem_t *sem_window = sem_open(WINDOW_SHM_SEMAPHORE, O_CREAT, S_IRWXU | S_IRWXG, 1);
     if (sem_window == SEM_FAILED)
     {
-        perror("Failed to create sem_window");
+        logerror(logpath, "error: sem_window create", errno);
     }
     else
     {
-        printf("Created sem_window\n");
+        logmessage(logpath, "Created sem_window");
     }
     sem_init(sem_window, 1, 0);
     int shm_window = shm_open(WINDOW_SIZE_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
     if (shm_window == -1)
     {
-        perror("Failed to create shm_window");
+        logerror(logpath, "error: shm_window create", errno);
     }
     else
     {
-        printf("Created shm_window\n");
+        logmessage(logpath, "Created shm_window");
     }
     ftruncate(shm_window, WINDOW_SHM_SIZE);
     void *window_ptr = mmap(NULL, WINDOW_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_window, 0);
@@ -184,21 +182,21 @@ int main(int argc, char *argv[])
     sem_t *sem_drone = sem_open(DRONE_POSITION_SEMAPHORE, O_CREAT, S_IRWXU | S_IRWXG, 1);
     if (sem_drone == SEM_FAILED)
     {
-        perror("Failed to create sem_drone");
+        logerror(logpath, "error: sem_drone create", errno);
     }
     else
     {
-        printf("Created sem_drone\n");
+        logmessage(logpath, "Created sem_drone");
     }
     sem_init(sem_drone, 1, 0);
     int shm_drone = shm_open(DRONE_POSITION_SHM, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG);
     if (shm_drone == -1)
     {
-        perror("Failed to create shm_drone");
+        logerror(logpath, "error: shm_drone create", errno);
     }
     else
     {
-        printf("Created shm_drone\n");
+        logmessage(logpath, "Created shm_drone");
     }
     ftruncate(shm_drone, DRONE_SHM_SIZE);
     int *drone_ptr = mmap(NULL, DRONE_SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_drone, 0);
@@ -208,6 +206,8 @@ int main(int argc, char *argv[])
     while (1)
     {
         usleep(DELTA_TIME_USECONDS);
+        logmessage(logpath, "Server performed 1 cycle");
+
         if (flag == 1)
         {
             sem_close(sem_window);
