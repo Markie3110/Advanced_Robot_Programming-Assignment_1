@@ -1,86 +1,79 @@
                      DATE/TIME                   MESSAGE/VARIABLE                               DATA
-  06-12-2023 23:19:16:655:353               Created serverpidfifo                                 -
-  06-12-2023 23:19:16:655:450                Opened serverpidfifo                                 -
-  06-12-2023 23:19:16:655:508                sent pid to watchdog                                 -
-  06-12-2023 23:19:16:655:608                 Opened sem_watchdog                                 -
-  06-12-2023 23:19:16:655:659                 Opened shm_watchdog                                 -
-  06-12-2023 23:19:16:655:861               received watchdog pid                                 -
-  06-12-2023 23:19:16:655:903                        watchdog_pid                              22752
-  06-12-2023 23:19:16:655:997                  Created sem_window                                 -
-   06-12-2023 23:19:16:656:46                  Created shm_window                                 -
-  06-12-2023 23:19:16:656:115                   Created sem_drone                                 -
-  06-12-2023 23:19:16:656:167                   Created shm_drone                                 -
-  06-12-2023 23:19:16:756:391            Server performed 1 cycle                                 -
-  06-12-2023 23:19:16:856:609            Server performed 1 cycle                                 -
-  06-12-2023 23:19:16:957:164            Server performed 1 cycle                                 -
-   06-12-2023 23:19:17:57:834            Server performed 1 cycle                                 -
-  06-12-2023 23:19:17:158:566            Server performed 1 cycle                                 -
-  06-12-2023 23:19:17:258:847            Server performed 1 cycle                                 -
-   06-12-2023 23:19:17:359:94            Server performed 1 cycle                                 -
-  06-12-2023 23:19:17:459:404            Server performed 1 cycle                                 -
-  06-12-2023 23:19:17:559:914            Server performed 1 cycle                                 -
-  06-12-2023 23:19:17:660:174            Server performed 1 cycle                                 -
-  06-12-2023 23:19:17:760:378            Server performed 1 cycle                                 -
-  06-12-2023 23:19:17:860:634            Server performed 1 cycle                                 -
-  06-12-2023 23:19:17:961:102            Server performed 1 cycle                                 -
-   06-12-2023 23:19:18:61:303            Server performed 1 cycle                                 -
-  06-12-2023 23:19:18:161:447            Server performed 1 cycle                                 -
-  06-12-2023 23:19:18:261:625            Server performed 1 cycle                                 -
-  06-12-2023 23:19:18:361:918            Server performed 1 cycle                                 -
-  06-12-2023 23:19:18:462:202            Server performed 1 cycle                                 -
-  06-12-2023 23:19:18:562:404            Server performed 1 cycle                                 -
-  06-12-2023 23:19:18:662:810            Server performed 1 cycle                                 -
-   06-12-2023 23:19:18:763:49            Server performed 1 cycle                                 -
-  06-12-2023 23:19:18:863:324            Server performed 1 cycle                                 -
-  06-12-2023 23:19:18:963:613            Server performed 1 cycle                                 -
-   06-12-2023 23:19:19:63:840            Server performed 1 cycle                                 -
-   06-12-2023 23:19:19:164:94            Server performed 1 cycle                                 -
-  06-12-2023 23:19:19:264:329            Server performed 1 cycle                                 -
-  06-12-2023 23:19:19:364:624            Server performed 1 cycle                                 -
-  06-12-2023 23:19:19:465:311            Server performed 1 cycle                                 -
-  06-12-2023 23:19:19:566:137            Server performed 1 cycle                                 -
-  06-12-2023 23:19:19:656:380            Server performed 1 cycle                                 -
-  06-12-2023 23:19:19:756:656            Server performed 1 cycle                                 -
-  06-12-2023 23:19:19:857:273            Server performed 1 cycle                                 -
-  06-12-2023 23:19:19:957:823            Server performed 1 cycle                                 -
-  06-12-2023 23:19:19:958:241            Server performed 1 cycle                                 -
-    06-12-2023 23:19:20:59:82            Server performed 1 cycle                                 -
-  06-12-2023 23:19:20:159:895            Server performed 1 cycle                                 -
-  06-12-2023 23:19:20:260:207            Server performed 1 cycle                                 -
-  06-12-2023 23:19:20:260:849            Server performed 1 cycle                                 -
-  06-12-2023 23:19:20:361:671            Server performed 1 cycle                                 -
-  06-12-2023 23:19:20:462:484            Server performed 1 cycle                                 -
-  06-12-2023 23:19:20:562:815            Server performed 1 cycle                                 -
-  06-12-2023 23:19:20:563:156            Server performed 1 cycle                                 -
-  06-12-2023 23:19:20:663:859            Server performed 1 cycle                                 -
-  06-12-2023 23:19:20:764:675            Server performed 1 cycle                                 -
-  06-12-2023 23:19:20:865:499            Server performed 1 cycle                                 -
-  06-12-2023 23:19:20:865:854            Server performed 1 cycle                                 -
-  06-12-2023 23:19:20:966:455            Server performed 1 cycle                                 -
-   06-12-2023 23:19:21:66:903            Server performed 1 cycle                                 -
-  06-12-2023 23:19:21:167:723            Server performed 1 cycle                                 -
-  06-12-2023 23:19:21:168:112            Server performed 1 cycle                                 -
-  06-12-2023 23:19:21:268:901            Server performed 1 cycle                                 -
-  06-12-2023 23:19:21:369:720            Server performed 1 cycle                                 -
-  06-12-2023 23:19:21:470:534            Server performed 1 cycle                                 -
-  06-12-2023 23:19:21:470:895            Server performed 1 cycle                                 -
-  06-12-2023 23:19:21:571:201            Server performed 1 cycle                                 -
-  06-12-2023 23:19:21:671:448            Server performed 1 cycle                                 -
-  06-12-2023 23:19:21:772:265            Server performed 1 cycle                                 -
-  06-12-2023 23:19:21:772:632            Server performed 1 cycle                                 -
-  06-12-2023 23:19:21:873:306            Server performed 1 cycle                                 -
-  06-12-2023 23:19:21:973:526            Server performed 1 cycle                                 -
-   06-12-2023 23:19:22:74:276            Server performed 1 cycle                                 -
-   06-12-2023 23:19:22:74:674            Server performed 1 cycle                                 -
-  06-12-2023 23:19:22:175:480            Server performed 1 cycle                                 -
-   06-12-2023 23:19:22:276:16            Server performed 1 cycle                                 -
-  06-12-2023 23:19:22:376:593            Server performed 1 cycle                                 -
-  06-12-2023 23:19:22:379:610            Server performed 1 cycle                                 -
-  06-12-2023 23:19:22:479:928            Server performed 1 cycle                                 -
-  06-12-2023 23:19:22:580:524            Server performed 1 cycle                                 -
-  06-12-2023 23:19:22:681:337            Server performed 1 cycle                                 -
-  06-12-2023 23:19:22:681:629            Server performed 1 cycle                                 -
-  06-12-2023 23:19:22:781:922            Server performed 1 cycle                                 -
-  06-12-2023 23:19:22:882:623            Server performed 1 cycle                                 -
-  06-12-2023 23:19:22:982:898            Server performed 1 cycle                                 -
-  06-12-2023 23:19:22:983:327            Server performed 1 cycle                                 -
+  09-12-2023 05:30:37:762:190               Created serverpidfifo                                 -
+  09-12-2023 05:30:37:957:123                Opened serverpidfifo                                 -
+  09-12-2023 05:30:37:957:201                sent pid to watchdog                                 -
+  09-12-2023 05:30:37:957:234                 Opened sem_watchdog                                 -
+  09-12-2023 05:30:37:957:260                 Opened shm_watchdog                                 -
+   09-12-2023 05:30:38:424:65               received watchdog pid                                 -
+   09-12-2023 05:30:38:424:92                        watchdog_pid                             176623
+  09-12-2023 05:30:38:424:120                  Created sem_window                                 -
+  09-12-2023 05:30:38:424:143                  Created shm_window                                 -
+  09-12-2023 05:30:38:424:176                   Created sem_drone                                 -
+  09-12-2023 05:30:38:424:196                   Created shm_drone                                 -
+  09-12-2023 05:30:38:524:402            Server performed 1 cycle                                 -
+  09-12-2023 05:30:38:624:684            Server performed 1 cycle                                 -
+  09-12-2023 05:30:38:724:989            Server performed 1 cycle                                 -
+  09-12-2023 05:30:38:825:810            Server performed 1 cycle                                 -
+  09-12-2023 05:30:38:926:486            Server performed 1 cycle                                 -
+   09-12-2023 05:30:39:27:147            Server performed 1 cycle                                 -
+  09-12-2023 05:30:39:127:457            Server performed 1 cycle                                 -
+  09-12-2023 05:30:39:227:688            Server performed 1 cycle                                 -
+  09-12-2023 05:30:39:327:907            Server performed 1 cycle                                 -
+  09-12-2023 05:30:39:428:362            Server performed 1 cycle                                 -
+  09-12-2023 05:30:39:529:181            Server performed 1 cycle                                 -
+  09-12-2023 05:30:39:629:529            Server performed 1 cycle                                 -
+  09-12-2023 05:30:39:730:359            Server performed 1 cycle                                 -
+  09-12-2023 05:30:39:830:609            Server performed 1 cycle                                 -
+  09-12-2023 05:30:39:930:901            Server performed 1 cycle                                 -
+   09-12-2023 05:30:40:31:521            Server performed 1 cycle                                 -
+  09-12-2023 05:30:40:131:825            Server performed 1 cycle                                 -
+   09-12-2023 05:30:40:232:94            Server performed 1 cycle                                 -
+  09-12-2023 05:30:40:332:361            Server performed 1 cycle                                 -
+  09-12-2023 05:30:40:432:897            Server performed 1 cycle                                 -
+  09-12-2023 05:30:40:533:209            Server performed 1 cycle                                 -
+  09-12-2023 05:30:40:633:476            Server performed 1 cycle                                 -
+   09-12-2023 05:30:40:734:22            Server performed 1 cycle                                 -
+  09-12-2023 05:30:40:834:566            Server performed 1 cycle                                 -
+  09-12-2023 05:30:40:935:139            Server performed 1 cycle                                 -
+   09-12-2023 05:30:41:35:453            Server performed 1 cycle                                 -
+  09-12-2023 05:30:41:135:862            Server performed 1 cycle                                 -
+  09-12-2023 05:30:41:236:368            Server performed 1 cycle                                 -
+  09-12-2023 05:30:41:336:678            Server performed 1 cycle                                 -
+  09-12-2023 05:30:41:424:842            Server performed 1 cycle                                 -
+  09-12-2023 05:30:41:525:119            Server performed 1 cycle                                 -
+  09-12-2023 05:30:41:625:407            Server performed 1 cycle                                 -
+   09-12-2023 05:30:41:726:23            Server performed 1 cycle                                 -
+  09-12-2023 05:30:41:726:405            Server performed 1 cycle                                 -
+  09-12-2023 05:30:41:826:994            Server performed 1 cycle                                 -
+  09-12-2023 05:30:41:927:718            Server performed 1 cycle                                 -
+   09-12-2023 05:30:42:28:175            Server performed 1 cycle                                 -
+   09-12-2023 05:30:42:28:697            Server performed 1 cycle                                 -
+  09-12-2023 05:30:42:129:111            Server performed 1 cycle                                 -
+  09-12-2023 05:30:42:229:603            Server performed 1 cycle                                 -
+  09-12-2023 05:30:42:330:277            Server performed 1 cycle                                 -
+  09-12-2023 05:30:42:330:603            Server performed 1 cycle                                 -
+  09-12-2023 05:30:42:430:998            Server performed 1 cycle                                 -
+  09-12-2023 05:30:42:531:431            Server performed 1 cycle                                 -
+  09-12-2023 05:30:42:631:740            Server performed 1 cycle                                 -
+  09-12-2023 05:30:42:632:336            Server performed 1 cycle                                 -
+  09-12-2023 05:30:42:732:633            Server performed 1 cycle                                 -
+  09-12-2023 05:30:42:833:229            Server performed 1 cycle                                 -
+  09-12-2023 05:30:42:933:826            Server performed 1 cycle                                 -
+  09-12-2023 05:30:42:934:159            Server performed 1 cycle                                 -
+   09-12-2023 05:30:43:34:862            Server performed 1 cycle                                 -
+  09-12-2023 05:30:43:135:168            Server performed 1 cycle                                 -
+  09-12-2023 05:30:43:235:473            Server performed 1 cycle                                 -
+  09-12-2023 05:30:43:236:119            Server performed 1 cycle                                 -
+  09-12-2023 05:30:43:336:383            Server performed 1 cycle                                 -
+  09-12-2023 05:30:43:436:655            Server performed 1 cycle                                 -
+  09-12-2023 05:30:43:537:163            Server performed 1 cycle                                 -
+  09-12-2023 05:30:43:537:701            Server performed 1 cycle                                 -
+  09-12-2023 05:30:43:637:968            Server performed 1 cycle                                 -
+  09-12-2023 05:30:43:738:250            Server performed 1 cycle                                 -
+  09-12-2023 05:30:43:838:966            Server performed 1 cycle                                 -
+  09-12-2023 05:30:43:839:208            Server performed 1 cycle                                 -
+  09-12-2023 05:30:43:939:881            Server performed 1 cycle                                 -
+   09-12-2023 05:30:44:40:281            Server performed 1 cycle                                 -
+  09-12-2023 05:30:44:140:867            Server performed 1 cycle                                 -
+  09-12-2023 05:30:44:141:218            Server performed 1 cycle                                 -
+  09-12-2023 05:30:44:241:496            Server performed 1 cycle                                 -

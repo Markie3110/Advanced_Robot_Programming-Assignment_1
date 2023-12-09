@@ -14,33 +14,40 @@
 #include <sys/types.h>
 #include <errno.h>
 #include "include/log.h"
-
-#define WATCHDOG_SHM "/watchdog_server"
-#define WATCHDOG_SEMAPHORE "/sem_watchdog"
-
-#define WATCHDOG_SHM_SIZE 10
-#define DELTA_TIME_USECONDS 100000
+#include "include/parameter.h"
 
 // Define global variables
-int received_response = 0;
-int server_buf[1] = {0};
-int ui_buf[1] = {0};
-int drone_buf[1] = {0};
-sem_t *sem_watchdog;
-FILE *logfd;
-char *logpath = "Assignment_1/log/watchdog.log";
+int received_response = 0; // Flag that sets when a response is received
+int server_buf[1] = {0}; // A buffer to hold the server pid
+int ui_buf[1] = {0}; // A buffer to hold the UI pid
+int drone_buf[1] = {0}; // A buffer to hold the drone pid
+FILE *logfd; // File pointer that contains the file descriptor for the log file
+char *logpath = "Assignment_1/log/watchdog.log"; // Path for the log file
 
 void terminate_signal_handler(int signum)
 {
-    kill(getppid(), SIGUSR1);
+    /* 
+    A signal handler that shuts down the system when receiving 
+    SIGUSR1 from the drone.
+    */
+
     kill(ui_buf[0], SIGTERM);
     kill(server_buf[0], SIGTERM);
     kill(drone_buf[0], SIGTERM);
+    kill(getppid(), SIGINT);
+
 }
+
 
 void watchdog_signal_handler(int signum)
 {
+    /*
+    A signal handler that changes the received_response flag variable when
+    receiving a response from a process.
+    */
+
     received_response = 1;
+
 }
 
 
@@ -49,23 +56,29 @@ int main(int argc, char *argv)
     // Open the log file
     logopen(logpath);
     
+
     // Declare the required variables
     int received_pids = 0;
 
+
+    // Declare a signal handler to handle a SIGUSR2 signal sent from the processes
     struct sigaction act;
     bzero(&act, sizeof(act));
     act.sa_handler = &watchdog_signal_handler;
     sigaction(SIGUSR2, &act, NULL);
 
+
+    // Declare a signal handler to handle a SIGUSR1 signal sent from the drone to 
+    // shutdown the system
     struct sigaction act2;
     bzero(&act2, sizeof(act2));
     act2.sa_handler = &terminate_signal_handler;
     sigaction(SIGUSR1, &act2, NULL);
 
 
-    // Create a FIFO to receive the pid from the server
+    // Open the FIFO to receive the pid from the server
     int serverpid_fd;
-    char *serverpidfifo = "Assignment_1/tmp/serverpidfifo";
+    char *serverpidfifo = "Assignment_1/src/tmp/serverpidfifo";
     while(1)
     {
         serverpid_fd = open(serverpidfifo, O_RDONLY);
@@ -82,9 +95,9 @@ int main(int argc, char *argv)
     }
 
 
-    // Create a FIFO to receive the pid from the UI
+    // Open the FIFO to receive the pid from the UI
     int UIpid_fd;
-    char *UIpidfifo = "Assignment_1/tmp/UIpidfifo";
+    char *UIpidfifo = "Assignment_1/src/tmp/UIpidfifo";
     while(1)
     {
         UIpid_fd = open(UIpidfifo, O_RDONLY);
@@ -101,9 +114,9 @@ int main(int argc, char *argv)
     }
 
 
-    // Create a FIFO to receive the pid from the drone
+    // Open the FIFO to receive the pid from the drone
     int dronepid_fd;
-    char *dronepidfifo = "Assignment_1/tmp/dronepidfifo";
+    char *dronepidfifo = "Assignment_1/src/tmp/dronepidfifo";
     while(1)
     {
         dronepid_fd = open(dronepidfifo, O_RDONLY);
@@ -120,6 +133,7 @@ int main(int argc, char *argv)
     }
 
 
+    // Find the maxfd from the current set of fds
     int maxfd = -1;
     int fd[3] = {serverpid_fd, UIpid_fd, dronepid_fd};
     for (int i = 0; i < 3; i++)
@@ -131,7 +145,8 @@ int main(int argc, char *argv)
     }
 
 
-    // Open the shared memory that transfers watchdog PID
+    // Open the semaphore for the watchdog PID shared memory
+    sem_t *sem_watchdog;
     while(1)
     {
         sem_watchdog = sem_open(WATCHDOG_SEMAPHORE, 0);
@@ -146,6 +161,9 @@ int main(int argc, char *argv)
         }
     }
     int shm_watchdog;
+
+
+    // Open the shared memory that transfers watchdog PID
     while(1)
     {
         sem_wait(sem_watchdog);
@@ -226,6 +244,7 @@ int main(int argc, char *argv)
     int current_pid;
 
 
+    // Wait a small duration for all the processes to intialize and run
     sleep(3);
 
 
@@ -236,24 +255,83 @@ int main(int argc, char *argv)
             // Check if the maximum cycles has been reached
             if (cycles == 3)
             {
-                 // Send a kill signal to every pid in pidlist and kill self
+                 // Send a kill signal to every pid in pidlist 
                     char str[100];
                     sprintf(str, "No response from %d: KILLING ALL PROCESSES", current_pid);
                     logmessage(logpath, str);
-                    kill(getppid(), SIGUSR1);
                     kill(ui_buf[0], SIGTERM);
                     kill(server_buf[0], SIGTERM);
                     kill(drone_buf[0], SIGTERM);
 
-                    sem_close(sem_watchdog);
-                    sem_unlink(WATCHDOG_SEMAPHORE);
-                    munmap(watchdog_ptr, WATCHDOG_SHM_SIZE);
-                    if (shm_unlink(WATCHDOG_SHM) == -1)
+                    // Close the FIFO for the server pid
+                    if((close(serverpid_fd)) == -1)
                     {
-                        logerror(logpath, "error: window_shm close", errno);
-                        return -1;
+                        logerror(logpath, "error: serverpid_fd close", errno);
+                    }
+                    else
+                    {
+                        logmessage(logpath, "Closed serverpid_fd");
                     }
 
+                    // Close the FIFO for the UI pid
+                    if((close(UIpid_fd)) == -1)
+                    {
+                        logerror(logpath, "error: UIpid_fd close", errno);
+                    }
+                    else
+                    {
+                        logmessage(logpath, "Closed UIpid_fd");
+                    }
+
+                    // Close the FIFO for the drone pid
+                    if((close(dronepid_fd)) == -1)
+                    {
+                        logerror(logpath, "error: dronepid_fd close", errno);
+                    }
+                    else
+                    {
+                        logmessage(logpath, "Closed dronepid_fd");
+                    }
+
+                    // Close and unlink the shared memory
+                    if((sem_close(sem_watchdog)) == -1)
+                    {
+                        logerror(logpath, "error: sem_watchdog close", errno);
+                    }
+                    else
+                    {
+                        logmessage(logpath, "Closed sem_watchdog");
+                    }
+
+                    if((sem_unlink(WATCHDOG_SEMAPHORE)) == -1)
+                    {
+                        logerror(logpath, "error: sem_watchdog unlink", errno);
+                    }
+                    else
+                    {
+                        logmessage(logpath, "Unlinked sem_watchdog");
+                    }
+
+                    if((munmap(watchdog_ptr, WATCHDOG_SHM_SIZE)) == -1)
+                    {
+                        logerror(logpath, "error: watchdog_ptr close", errno);
+                    }
+                    else
+                    {
+                        logmessage(logpath, "Closed watchdog_ptr");
+                    }
+
+                    if (shm_unlink(WATCHDOG_SHM) == -1)
+                    {
+                        logerror(logpath, "error: watchdog_shm close", errno);
+                    }
+                    else
+                    {
+                        logmessage(logpath, "Closed watchdog_shm");
+                    }
+                    
+                    // Kill the konsole and self
+                    kill(getppid(), SIGINT);
                     raise(SIGTERM);
             }
 
@@ -275,7 +353,7 @@ int main(int argc, char *argv)
             while (cycles < 3)
             {
                 // Wait a certain duration between cycles
-                usleep(DELTA_TIME_USECONDS);
+                usleep(DELTA_TIME_USEC);
 
                 // Check if the flag variable has changed
                 if (received_response == 1)
