@@ -9,6 +9,10 @@ The following work has been performed by Mark Henry Dsouza.
 
 Table of Contents
 ----------------------
+1. [Overview]()
+2. [Installation]()
+3. [How to Run]()
+4. [Operational instructions]()
 
 Overview
 ----------------------
