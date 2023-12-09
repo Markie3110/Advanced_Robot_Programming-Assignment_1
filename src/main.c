@@ -36,10 +36,10 @@ int main(int argc, char *argv[])
 
 
     // Declare the arguments to be passed for each individual process
-    char *server_arg_list[] = {"konsole", "-e", "./server", NULL};
-    char *userinterface_arg_list[] = {"konsole", "-e", "./userinterface", NULL};
-    char *drone_arg_list[] = {"konsole", "-e", "./drone", NULL};
-    char *watchdog_arg_list[] = {"konsole", "-e", "./watchdog", NULL};
+    char *server_arg_list[] = {"konsole", "-e", "./src/server", NULL};
+    char *userinterface_arg_list[] = {"konsole", "-e", "./src/userinterface", NULL};
+    char *drone_arg_list[] = {"konsole", "-e", "./src/drone", NULL};
+    char *watchdog_arg_list[] = {"konsole", "-e", "./src/watchdog", NULL};
 
 
     // Perform a fork 4 times, executing a different process in each fork
