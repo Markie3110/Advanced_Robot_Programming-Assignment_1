@@ -9,10 +9,10 @@ The following work has been performed by Mark Henry Dsouza.
 
 Table of Contents
 ----------------------
-1. [Overview]()
-2. [Installation]()
-3. [How to Run]()
-4. [Operational instructions]()
+1. [Overview](https://github.com/Markie3110/Advanced_Robot_Programming-Assignment_1#overview)
+2. [Installation](https://github.com/Markie3110/Advanced_Robot_Programming-Assignment_1#installation)
+3. [How to Run](https://github.com/Markie3110/Advanced_Robot_Programming-Assignment_1#how-to-run)
+4. [Operational instructions](https://github.com/Markie3110/Advanced_Robot_Programming-Assignment_1#operational-instructions)
 
 Overview
 ----------------------
