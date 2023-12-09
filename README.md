@@ -39,3 +39,19 @@ folder or else the system will not run.
 
 Operational instructions
 ----------------------
+To operate the drone use the following keys:
+```bash
+'q' 'w' 'e'
+'a' 's' 'd'
+'z' 'x' 'c'
+```
+The keys represent the following movements for the drone
+* 'q': TOP-LEFT
+* 'w': TOP
+* 'e': TOP-RIGHT
+* 'a': LEFT
+* 's': STOP
+* 'd': RIGHT
+* 'z': BOTTOM-LEFT
+* 'x': BOTTOM
+* 'c': BOTTOM-RIGHT
