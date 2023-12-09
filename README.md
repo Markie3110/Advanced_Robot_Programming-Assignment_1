@@ -18,13 +18,13 @@ Installation
 ----------------------
 To download the repository's contents to your local system you can do one of the following:
 
-1. Using git from your local system
+1. Using git from your local system<br>
 To download the repo using git simply go to your terminal and go to the directory you want to save the project in. Type the following command to clone the repository to your local folder:
 ```bash
 $ git clone "https://github.com/Markie3110/Advanced_Robot_Programming-Assignment_1"
 ```
 
-2. Download the .zip from Github
+2. Download the .zip from Github<br>
 In a browser go to the repository on Github and download the .zip file availabe in the code dropdown box found at the top right. Unzip the file to access the contents.
 
 How to Run
@@ -33,7 +33,7 @@ To both build the executables and run the system, navigate to the src folder wit
 ```bash
 make
 ```
-The simulator should compile and then execute.
+The simulator should compile and then execute.<br>
 NOTE: Due to the use of named FIFOs with paths, it is important that the Assignment_1 folder is stored in the root directory of your system. There should be no intermediary folders between the root and Assignment_1
 folder or else the system will not run.
 
