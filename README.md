@@ -55,4 +55,4 @@ The keys represent the following movements for the drone
 * `z`: BOTTOM-LEFT
 * `x`: BOTTOM
 * `c`: BOTTOM-RIGHT
-<br>In addition, `k` and `l` can be used to reset the drone to its starting point and shut down the entire system respectively.
+<br><br>In addition, `k` and `l` can be used to reset the drone to its starting point and shut down the entire system respectively.
