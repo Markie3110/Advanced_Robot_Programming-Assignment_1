@@ -48,11 +48,10 @@ To operate the drone use the following keys:
 The keys represent the following movements for the drone
 * `q`: TOP-LEFT
 * `w`: TOP
-* 'e': TOP-RIGHT
-* 'a': LEFT
-* 's': STOP
-* 'd': RIGHT
-* 'z': BOTTOM-LEFT
-* 'x': BOTTOM
-* 'c': BOTTOM-RIGHT
-  `Hello This is a code`
+* `e`: TOP-RIGHT
+* `a`: LEFT
+* `s`: STOP
+* `d`: RIGHT
+* `z`: BOTTOM-LEFT
+* `x`: BOTTOM
+* `c`: BOTTOM-RIGHT
