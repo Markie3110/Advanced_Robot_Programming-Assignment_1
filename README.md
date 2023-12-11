@@ -37,6 +37,7 @@ The server is the first of the core processes to be run by the parent. Its role 
 | Watchdog PID | watchdog | server, UI, drone |
 | Window Size | UI | drone |
 | Drone Position | drone | UI |
+| --- | --- | --- |
 <br>Once the shared memory objects have been created, the server runs in a loop with a time interval until it receives a terminate signal (`SIGTERM`) either from the watchdog, or due to a user input.
 
 ### User interface ###
