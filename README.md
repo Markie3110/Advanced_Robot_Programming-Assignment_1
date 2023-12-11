@@ -45,7 +45,7 @@ The user interface is the frontend process for the entire system. It is the loca
 
 ### Drone ###
 The drone is the process in which the dynamical behaviour of the drone has been modelled. The equation describing the drone movement is as follows:
-```
+```math
 \sum F_x = M*{{x_{i-2} + x_i - (2 * x_{i-1})} \over T^2}
 ```
 Like the UI, the process runs in a loop and receives the keypressed values given by the user. Depending on 
