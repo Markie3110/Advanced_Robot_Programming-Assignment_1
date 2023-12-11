@@ -49,9 +49,9 @@ The drone is the process in which the dynamical behaviour of the drone has been 
 F_x = M*{{x_{i-2} + x_i - (2 * x_{i-1})} \over T^2} + K*{{x_i - x_{i-1}} \over T}
 ```
 ```math
-F_y = M*{{y_{i-2} + y_i - (2 * y_{i-1})} \over T^2} + K*{{\y_i - y_{i-1}} \over T}
+F_y = M*{{y_{i-2} + y_i - (2 * y_{i-1})} \over T^2} + K*{{y_i - y_{i-1}} \over T}
 ```
-where, $F_x$ and $F_y$ are the input forces in the x and y direction respectively, $T$ is the time interval, $M$ is the mass of the drone, $K$ the coefficient of viscosity, ($x_{i}$,$y_{i}$) the current drone position, ($x_{i-1}$,$y_{i-1}$) the drone position one time interval ago and ($x_{i-2}$,$y_{i-2}$) two time intervals ago.
+where, $F_x$ and $F_y$ are the input forces in the x and y direction respectively, $T$ is the time interval, $M$ is the mass of the drone, $K$ the coefficient of viscosity, ($x_{i},y_{i}$) the current drone position, ($x_{i-1},y_{i-1}$) the drone position one time interval ago and ($x_{i-2},y_{i-2}$) two time intervals ago.
 Like the UI, the process runs in a loop and receives the keypressed values given by the user. Depending on 
 
 
