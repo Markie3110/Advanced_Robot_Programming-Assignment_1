@@ -9,7 +9,7 @@ The following work has been performed by Mark Henry Dsouza.
 
 Table of Contents
 ----------------------
-1. [Architecture]()
+1. [Architecture](https://github.com/Markie3110/Advanced_Robot_Programming-Assignment_1#architecture)
 2. [Overview](https://github.com/Markie3110/Advanced_Robot_Programming-Assignment_1#overview)
 3. [Installation](https://github.com/Markie3110/Advanced_Robot_Programming-Assignment_1#installation)
 4. [How to Run](https://github.com/Markie3110/Advanced_Robot_Programming-Assignment_1#how-to-run)
@@ -25,13 +25,21 @@ Shown here is the software architecture of the system depicting the parent/child
 
 Overview
 ----------------------
-As depicted in the architecture, the system consists of 5 core programs, namely: main, server, user interface, drone and watchdog, that all work concurrently to run the simulator. Besides the core programs, we also have two header files: parameters and log that are used by the core files during runtime. A detailed description of each is given below.
-
-## Core Files ##
+As depicted in the architecture, the system consists of 5 core processes, namely: main, server, user interface, drone and watchdog, that all work concurrently to run the simulator. Besides the core programs, we also have two header files: parameters and log that are used by the core files during runtime. A detailed description of each is given below.
 
 ### Main ###
+Main is the parent process of the entire system and is solely responsible for executing each and every individual process required by the simulator. It does this by repeatedly forking itself using the `fork()` function, and then executing each process within the newly created child with `execvp()`. Once all the necessary processes have been created, main waits until all the created children have ended their execution, following which it itself is terminated.
 
 ### Server ###
+The server is the first of the core processes to be run by the parent. Its role is to create and allocate shared memory spaces that will subsequently be used by the different processes to transfer data, along with any necessary semaphores needed for the same. Given below are the different variables transfered using the shared memory objects, along with their respective producers and consumers:
+| Variable | Producer Process | Consumer Processes |
+| --- | --- | --- |
+| Watchdog PID | watchdog | server, UI, drone |
+| Window Size | UI | drone |
+| Drone Position | drone | UI |
+
+
+- Deletes old shared memory object
 
 ### User interface ###
 
@@ -89,3 +97,9 @@ The keys represent the following movements for the drone
 * `x`: BOTTOM
 * `c`: BOTTOM-RIGHT
 <br><br>In addition, `k` and `l` can be used to reset the drone to its starting point and shut down the entire system respectively.
+
+Known Errors
+----------------------
+
+Authors Notes
+----------------------
