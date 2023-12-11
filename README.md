@@ -44,6 +44,11 @@ Once the shared memory objects have been created, the server runs in a loop with
 The user interface is the frontend process for the entire system. It is the location where all the inputs from the user are gathered, as well as where all the visual outputs to the user are depicted. The process first creates a graphical user interface with the help of the `ncurses` library, consisting of two windows: one drone window, to depict the virtual environement the drone moves in, and an inspector window, that displays the drone's position numerically. Subsequently, the process enters a loop where in each iteration, it looks to see if the user has given any key inputs using the `wgetch()` function, following which it passes on the acquired keyvalue to the shared memory. Given that there may be times the user does not provide any input, to ensure that the `wgetch()` function does not block each iteration of the loop indefinetely waiting for it, we also use the `wtimeout()` function, which specifies a maximum time interval `wgetch()` should wait for, at the end of which the execution is continued. Besides passing keyvalues, the UI also reads the latest drone position from the shared memory and depicts it as such. 
 
 ### Drone ###
+The drone is the process in which the dynamical behaviour of the drone has been modelled. The equation describing the drone movement is as follows:
+```
+\sum F_x = M*{{x_{i-2} + x_i - (2 * x_{i-1})} \over T^2}
+```
+Like the UI, the process runs in a loop and receives the keypressed values given by the user. Depending on 
 
 
 ### Watchdog ###
