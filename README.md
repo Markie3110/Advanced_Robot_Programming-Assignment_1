@@ -44,7 +44,7 @@ Once the shared memory objects have been created, the server runs in a loop with
 The user interface is the frontend process for the entire system. It is the location where all the inputs from the user are gathered, as well as where all the visual outputs to the user are depicted. The process first creates a graphical user interface with the help of the `ncurses` library, consisting of two windows: one drone window, to depict the virtual environement the drone moves in, and an inspector window, that displays the drone's position numerically. Subsequently, the process enters a loop where in each iteration, it looks to see if the user has given any key inputs using the `wgetch()` function, following which it passes on the acquired keyvalue to the shared memory. Given that there may be times the user does not provide any input, to ensure that the `wgetch()` function does not block each iteration of the loop indefinetely waiting for it, we also use the `wtimeout()` function, which specifies a maximum time interval `wgetch()` should wait for, at the end of which the execution is continued. Besides passing keyvalues, the UI also reads the latest drone position from the shared memory and depicts it as such. 
 
 ### Drone ###
-The drone is the process in which the dynamical behaviour of the drone has been modelled. The equation describing the drone movement is as follows:
+The drone is the process in which the dynamical behaviour of the drone has been modelled. The equation describing the drone movement have been taken as follows:
 ```math
 F_x = M*{{x_{i-2} + x_i - (2 * x_{i-1})} \over T^2} + K*{{x_i - x_{i-1}} \over T}
 ```
@@ -58,14 +58,13 @@ x_i = {{F*T^2 - M*x_{i-2} + 2*M*x_{i-1} + K*T*x_{i-1}} \over {M + K*T}}
 ```math
 y_i = {{F*T^2 - M*y_{i-2} + 2*M*y_{i-1} + K*T*y_{i-1}} \over {M + K*T}}
 ```
-<br>Like the UI, the drone process runs in a loop and receives the keypressed values given by the user. Depending on the value of the key, the 
-
+Like the UI, the drone process runs in a loop and receives the keypressed values given by the user. Depending on the value of the key, the input force in either axis is either incremented or decremented. Subsequently, the drone position is calculated using the current values of the input forces and is passed on to the shared memory. Do note, that if the drone is moving and the user pushes the stop key, the drone does not stop immediately, but keeps on moving for a small duration due to inertia.
 
 ### Watchdog ###
-
-## Supplementary Files ##
+The watchdog is the process that oversees the overall system behaviour by observing all the processes and terminating everything if any of them encounter a critical error. During their intialization, every process sends their pids to the watchdog using named pipes, which in turn conveys its own pid to them using a shared memory object. Using these pids, the watchdog sends a `SIGUSR1` signal to a process, which in turn is supposed to send back a `SIGUSR2` signal if it is working properly. The watchdog waits for upto three cycles, characterised by a time duration, for a response. If the process does not return the required signal within the required number of cycles, the watchdog takes this to mean that the process has encountered a critical error and subsequently terminates all the running processes. On the other hand, if the signal is received within the specificied time, the watchdog moves on to the next process. Once the watchdog reaches the final pid, it returns back to the first and starts over until the user terminates the system.
 
 ### Parameters ###
+
 
 ### Log ###
 
