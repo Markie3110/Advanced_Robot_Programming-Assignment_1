@@ -1,0 +1,637 @@
+                     DATE/TIME                   MESSAGE/VARIABLE                               DATA
+  10-12-2023 22:03:59:166:973           error: serverpidfifo open          No such file or directory
+   10-12-2023 22:03:59:167:87           error: serverpidfifo open          No such file or directory
+  10-12-2023 22:03:59:167:173           error: serverpidfifo open          No such file or directory
+  10-12-2023 22:03:59:167:264           error: serverpidfifo open          No such file or directory
+  10-12-2023 22:03:59:167:351           error: serverpidfifo open          No such file or directory
+  10-12-2023 22:03:59:167:434           error: serverpidfifo open          No such file or directory
+  10-12-2023 22:03:59:167:517           error: serverpidfifo open          No such file or directory
+  10-12-2023 22:03:59:167:599           error: serverpidfifo open          No such file or directory
+  10-12-2023 22:03:59:167:686           error: serverpidfifo open          No such file or directory
+  10-12-2023 22:03:59:167:825                Opened serverpidfifo                                 -
+  10-12-2023 22:03:59:167:844               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:167:927               error: UIpidfifo open          No such file or directory
+   10-12-2023 22:03:59:168:10               error: UIpidfifo open          No such file or directory
+   10-12-2023 22:03:59:168:94               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:168:178               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:168:262               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:168:345               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:168:428               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:168:511               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:168:594               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:168:677               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:168:761               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:168:844               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:168:930               error: UIpidfifo open          No such file or directory
+   10-12-2023 22:03:59:169:18               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:169:105               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:169:195               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:169:289               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:169:388               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:169:484               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:169:582               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:169:705               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:169:819               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:169:924               error: UIpidfifo open          No such file or directory
+   10-12-2023 22:03:59:170:30               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:170:139               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:170:210               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:170:302               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:170:399               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:170:491               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:170:609               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:170:713               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:170:814               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:170:916               error: UIpidfifo open          No such file or directory
+   10-12-2023 22:03:59:171:10               error: UIpidfifo open          No such file or directory
+   10-12-2023 22:03:59:171:96               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:171:185               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:171:291               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:171:396               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:171:486               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:171:573               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:171:666               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:171:775               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:171:873               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:171:962               error: UIpidfifo open          No such file or directory
+   10-12-2023 22:03:59:172:47               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:172:132               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:172:217               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:172:310               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:172:401               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:172:492               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:172:579               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:172:666               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:172:757               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:172:844               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:172:931               error: UIpidfifo open          No such file or directory
+   10-12-2023 22:03:59:173:21               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:173:109               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:173:196               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:173:286               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:173:374               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:173:463               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:173:552               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:173:639               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:173:727               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:173:816               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:173:903               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:173:992               error: UIpidfifo open          No such file or directory
+   10-12-2023 22:03:59:174:81               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:174:168               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:174:267               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:174:365               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:174:455               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:174:546               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:174:633               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:174:721               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:174:810               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:174:897               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:174:985               error: UIpidfifo open          No such file or directory
+   10-12-2023 22:03:59:175:74               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:175:161               error: UIpidfifo open          No such file or directory
+  10-12-2023 22:03:59:175:268                    Opened UIpidfifo                                 -
+  10-12-2023 22:03:59:175:293                 Opened dronepidfifo                                 -
+  10-12-2023 22:03:59:175:338                 Opened sem_watchdog                                 -
+  10-12-2023 22:03:59:175:371                 Opened shm_watchdog                                 -
+  10-12-2023 22:03:59:175:414                        watchdog pid                               3646
+  10-12-2023 22:03:59:175:440      sent watchdog pid to processes                                 -
+  10-12-2023 22:03:59:175:481                          server pid                               3648
+  10-12-2023 22:03:59:175:500                              UI pid                               3647
+  10-12-2023 22:03:59:175:516                           drone pid                               3645
+  10-12-2023 22:04:02:175:835                         current pid                               3648
+  10-12-2023 22:04:02:175:943                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:02:276:591         received response from 3648                                 -
+  10-12-2023 22:04:02:276:687                         current pid                               3647
+  10-12-2023 22:04:02:276:758                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:02:377:166         received response from 3647                                 -
+  10-12-2023 22:04:02:377:256                         current pid                               3645
+  10-12-2023 22:04:02:377:327                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:02:477:740         received response from 3645                                 -
+  10-12-2023 22:04:02:477:831                         current pid                               3648
+  10-12-2023 22:04:02:477:905                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:02:578:699         received response from 3648                                 -
+  10-12-2023 22:04:02:578:790                         current pid                               3647
+  10-12-2023 22:04:02:578:862                sent SIGUSR1 to 3647                                 -
+   10-12-2023 22:04:02:679:54         received response from 3647                                 -
+   10-12-2023 22:04:02:679:69                         current pid                               3645
+   10-12-2023 22:04:02:679:82                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:02:779:226         received response from 3645                                 -
+  10-12-2023 22:04:02:779:241                         current pid                               3648
+  10-12-2023 22:04:02:779:254                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:02:879:426         received response from 3648                                 -
+  10-12-2023 22:04:02:879:446                         current pid                               3647
+  10-12-2023 22:04:02:879:459                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:02:979:631         received response from 3647                                 -
+  10-12-2023 22:04:02:979:646                         current pid                               3645
+  10-12-2023 22:04:02:979:678                sent SIGUSR1 to 3645                                 -
+   10-12-2023 22:04:03:79:886         received response from 3645                                 -
+   10-12-2023 22:04:03:79:902                         current pid                               3648
+   10-12-2023 22:04:03:79:915                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:03:180:679         received response from 3648                                 -
+  10-12-2023 22:04:03:180:765                         current pid                               3647
+  10-12-2023 22:04:03:180:829                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:03:281:341         received response from 3647                                 -
+  10-12-2023 22:04:03:281:433                         current pid                               3645
+  10-12-2023 22:04:03:281:504                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:03:381:950         received response from 3645                                 -
+  10-12-2023 22:04:03:381:985                         current pid                               3648
+   10-12-2023 22:04:03:382:11                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:03:482:705         received response from 3648                                 -
+  10-12-2023 22:04:03:482:788                         current pid                               3647
+  10-12-2023 22:04:03:482:851                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:03:583:493         received response from 3647                                 -
+  10-12-2023 22:04:03:583:583                         current pid                               3645
+  10-12-2023 22:04:03:583:655                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:03:684:271         received response from 3645                                 -
+  10-12-2023 22:04:03:684:354                         current pid                               3648
+  10-12-2023 22:04:03:684:418                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:03:785:222         received response from 3648                                 -
+  10-12-2023 22:04:03:785:305                         current pid                               3647
+  10-12-2023 22:04:03:785:369                sent SIGUSR1 to 3647                                 -
+    10-12-2023 22:04:03:886:8         received response from 3647                                 -
+  10-12-2023 22:04:03:886:100                         current pid                               3645
+  10-12-2023 22:04:03:886:172                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:03:986:789         received response from 3645                                 -
+  10-12-2023 22:04:03:986:880                         current pid                               3648
+  10-12-2023 22:04:03:986:951                sent SIGUSR1 to 3648                                 -
+   10-12-2023 22:04:04:87:748         received response from 3648                                 -
+   10-12-2023 22:04:04:87:839                         current pid                               3647
+   10-12-2023 22:04:04:87:910                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:04:188:534         received response from 3647                                 -
+  10-12-2023 22:04:04:188:616                         current pid                               3645
+  10-12-2023 22:04:04:188:682                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:04:289:314         received response from 3645                                 -
+  10-12-2023 22:04:04:289:397                         current pid                               3648
+  10-12-2023 22:04:04:289:461                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:04:390:285         received response from 3648                                 -
+  10-12-2023 22:04:04:390:319                         current pid                               3647
+  10-12-2023 22:04:04:390:342                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:04:490:590         received response from 3647                                 -
+  10-12-2023 22:04:04:490:662                         current pid                               3645
+  10-12-2023 22:04:04:490:724                sent SIGUSR1 to 3645                                 -
+   10-12-2023 22:04:04:591:19         received response from 3645                                 -
+  10-12-2023 22:04:04:591:100                         current pid                               3648
+  10-12-2023 22:04:04:591:171                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:04:691:541         received response from 3648                                 -
+  10-12-2023 22:04:04:691:622                         current pid                               3647
+  10-12-2023 22:04:04:691:705                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:04:792:224         received response from 3647                                 -
+  10-12-2023 22:04:04:792:269                         current pid                               3645
+  10-12-2023 22:04:04:792:303                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:04:892:726         received response from 3645                                 -
+  10-12-2023 22:04:04:892:817                         current pid                               3648
+  10-12-2023 22:04:04:892:887                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:04:993:691         received response from 3648                                 -
+  10-12-2023 22:04:04:993:783                         current pid                               3647
+  10-12-2023 22:04:04:993:854                sent SIGUSR1 to 3647                                 -
+   10-12-2023 22:04:05:94:478         received response from 3647                                 -
+   10-12-2023 22:04:05:94:569                         current pid                               3645
+   10-12-2023 22:04:05:94:640                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:05:195:266         received response from 3645                                 -
+  10-12-2023 22:04:05:195:357                         current pid                               3648
+  10-12-2023 22:04:05:195:428                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:05:296:237         received response from 3648                                 -
+  10-12-2023 22:04:05:296:338                         current pid                               3647
+  10-12-2023 22:04:05:296:416                sent SIGUSR1 to 3647                                 -
+   10-12-2023 22:04:05:397:31         received response from 3647                                 -
+  10-12-2023 22:04:05:397:122                         current pid                               3645
+  10-12-2023 22:04:05:397:193                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:05:497:815         received response from 3645                                 -
+  10-12-2023 22:04:05:497:905                         current pid                               3648
+  10-12-2023 22:04:05:497:976                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:05:598:716         received response from 3648                                 -
+  10-12-2023 22:04:05:598:806                         current pid                               3647
+  10-12-2023 22:04:05:598:904                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:05:699:499         received response from 3647                                 -
+  10-12-2023 22:04:05:699:588                         current pid                               3645
+  10-12-2023 22:04:05:699:659                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:05:800:284         received response from 3645                                 -
+  10-12-2023 22:04:05:800:376                         current pid                               3648
+  10-12-2023 22:04:05:800:447                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:05:901:254         received response from 3648                                 -
+  10-12-2023 22:04:05:901:344                         current pid                               3647
+  10-12-2023 22:04:05:901:415                sent SIGUSR1 to 3647                                 -
+     10-12-2023 22:04:06:2:36         received response from 3647                                 -
+    10-12-2023 22:04:06:2:126                         current pid                               3645
+    10-12-2023 22:04:06:2:232                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:06:102:822         received response from 3645                                 -
+  10-12-2023 22:04:06:102:913                         current pid                               3648
+  10-12-2023 22:04:06:102:984                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:06:203:794         received response from 3648                                 -
+  10-12-2023 22:04:06:203:886                         current pid                               3647
+  10-12-2023 22:04:06:203:957                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:06:304:236         received response from 3647                                 -
+  10-12-2023 22:04:06:304:309                         current pid                               3645
+  10-12-2023 22:04:06:304:372                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:06:404:576         received response from 3645                                 -
+  10-12-2023 22:04:06:404:593                         current pid                               3648
+  10-12-2023 22:04:06:404:608                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:06:504:894         received response from 3648                                 -
+  10-12-2023 22:04:06:504:975                         current pid                               3647
+   10-12-2023 22:04:06:505:38                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:06:605:310         received response from 3647                                 -
+  10-12-2023 22:04:06:605:384                         current pid                               3645
+  10-12-2023 22:04:06:605:449                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:06:705:721         received response from 3645                                 -
+  10-12-2023 22:04:06:705:795                         current pid                               3648
+  10-12-2023 22:04:06:705:858                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:06:806:227         received response from 3648                                 -
+  10-12-2023 22:04:06:806:308                         current pid                               3647
+  10-12-2023 22:04:06:806:372                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:06:906:643         received response from 3647                                 -
+  10-12-2023 22:04:06:906:716                         current pid                               3645
+  10-12-2023 22:04:06:906:778                sent SIGUSR1 to 3645                                 -
+     10-12-2023 22:04:07:7:46         received response from 3645                                 -
+    10-12-2023 22:04:07:7:141                         current pid                               3648
+    10-12-2023 22:04:07:7:204                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:07:107:999         received response from 3648                                 -
+   10-12-2023 22:04:07:108:89                         current pid                               3647
+  10-12-2023 22:04:07:108:160                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:07:208:792         received response from 3647                                 -
+  10-12-2023 22:04:07:208:884                         current pid                               3645
+  10-12-2023 22:04:07:208:955                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:07:309:237         received response from 3645                                 -
+  10-12-2023 22:04:07:309:315                         current pid                               3648
+  10-12-2023 22:04:07:309:379                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:07:409:686         received response from 3648                                 -
+  10-12-2023 22:04:07:409:769                         current pid                               3647
+  10-12-2023 22:04:07:409:833                sent SIGUSR1 to 3647                                 -
+   10-12-2023 22:04:07:510:78         received response from 3647                                 -
+  10-12-2023 22:04:07:510:157                         current pid                               3645
+  10-12-2023 22:04:07:510:251                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:07:610:574         received response from 3645                                 -
+  10-12-2023 22:04:07:610:648                         current pid                               3648
+  10-12-2023 22:04:07:610:713                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:07:710:988         received response from 3648                                 -
+   10-12-2023 22:04:07:711:69                         current pid                               3647
+  10-12-2023 22:04:07:711:133                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:07:811:413         received response from 3647                                 -
+  10-12-2023 22:04:07:811:486                         current pid                               3645
+  10-12-2023 22:04:07:811:549                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:07:911:821         received response from 3645                                 -
+  10-12-2023 22:04:07:911:895                         current pid                               3648
+  10-12-2023 22:04:07:911:957                sent SIGUSR1 to 3648                                 -
+   10-12-2023 22:04:08:12:167         received response from 3648                                 -
+   10-12-2023 22:04:08:12:205                         current pid                               3647
+   10-12-2023 22:04:08:12:233                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:08:112:478         received response from 3647                                 -
+  10-12-2023 22:04:08:112:580                         current pid                               3645
+  10-12-2023 22:04:08:112:651                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:08:212:874         received response from 3645                                 -
+  10-12-2023 22:04:08:212:957                         current pid                               3648
+   10-12-2023 22:04:08:213:28                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:08:313:324         received response from 3648                                 -
+  10-12-2023 22:04:08:313:398                         current pid                               3647
+  10-12-2023 22:04:08:313:462                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:08:413:748         received response from 3647                                 -
+  10-12-2023 22:04:08:413:820                         current pid                               3645
+  10-12-2023 22:04:08:413:884                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:08:514:163         received response from 3645                                 -
+  10-12-2023 22:04:08:514:261                         current pid                               3648
+  10-12-2023 22:04:08:514:324                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:08:614:542         received response from 3648                                 -
+  10-12-2023 22:04:08:614:627                         current pid                               3647
+  10-12-2023 22:04:08:614:692                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:08:714:981         received response from 3647                                 -
+   10-12-2023 22:04:08:715:55                         current pid                               3645
+  10-12-2023 22:04:08:715:117                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:08:815:391         received response from 3645                                 -
+  10-12-2023 22:04:08:815:465                         current pid                               3648
+  10-12-2023 22:04:08:815:529                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:08:915:843         received response from 3648                                 -
+  10-12-2023 22:04:08:915:925                         current pid                               3647
+  10-12-2023 22:04:08:915:989                sent SIGUSR1 to 3647                                 -
+   10-12-2023 22:04:09:16:201         received response from 3647                                 -
+   10-12-2023 22:04:09:16:217                         current pid                               3645
+   10-12-2023 22:04:09:16:251                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:09:116:463         received response from 3645                                 -
+  10-12-2023 22:04:09:116:538                         current pid                               3648
+  10-12-2023 22:04:09:116:602                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:09:217:247         received response from 3648                                 -
+  10-12-2023 22:04:09:217:327                         current pid                               3647
+  10-12-2023 22:04:09:217:391                sent SIGUSR1 to 3647                                 -
+   10-12-2023 22:04:09:318:43         received response from 3647                                 -
+  10-12-2023 22:04:09:318:124                         current pid                               3645
+  10-12-2023 22:04:09:318:238                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:09:418:824         received response from 3645                                 -
+  10-12-2023 22:04:09:418:851                         current pid                               3648
+  10-12-2023 22:04:09:418:870                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:09:519:129         received response from 3648                                 -
+  10-12-2023 22:04:09:519:209                         current pid                               3647
+  10-12-2023 22:04:09:519:272                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:09:619:467         received response from 3647                                 -
+  10-12-2023 22:04:09:619:489                         current pid                               3645
+  10-12-2023 22:04:09:619:511                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:09:719:734         received response from 3645                                 -
+  10-12-2023 22:04:09:719:839                         current pid                               3648
+  10-12-2023 22:04:09:719:910                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:09:820:254         received response from 3648                                 -
+  10-12-2023 22:04:09:820:348                         current pid                               3647
+  10-12-2023 22:04:09:820:424                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:09:920:697         received response from 3647                                 -
+  10-12-2023 22:04:09:920:794                         current pid                               3645
+  10-12-2023 22:04:09:920:887                sent SIGUSR1 to 3645                                 -
+   10-12-2023 22:04:10:21:113         received response from 3645                                 -
+   10-12-2023 22:04:10:21:226                         current pid                               3648
+   10-12-2023 22:04:10:21:311                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:10:122:126         received response from 3648                                 -
+  10-12-2023 22:04:10:122:249                         current pid                               3647
+  10-12-2023 22:04:10:122:325                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:10:222:770         received response from 3647                                 -
+  10-12-2023 22:04:10:222:865                         current pid                               3645
+  10-12-2023 22:04:10:222:935                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:10:323:211         received response from 3645                                 -
+  10-12-2023 22:04:10:323:292                         current pid                               3648
+  10-12-2023 22:04:10:323:361                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:10:424:170         received response from 3648                                 -
+  10-12-2023 22:04:10:424:260                         current pid                               3647
+  10-12-2023 22:04:10:424:331                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:10:524:954         received response from 3647                                 -
+  10-12-2023 22:04:10:524:991                         current pid                               3645
+   10-12-2023 22:04:10:525:18                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:10:625:708         received response from 3645                                 -
+  10-12-2023 22:04:10:625:799                         current pid                               3648
+  10-12-2023 22:04:10:625:869                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:10:726:604         received response from 3648                                 -
+  10-12-2023 22:04:10:726:695                         current pid                               3647
+  10-12-2023 22:04:10:726:765                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:10:827:384         received response from 3647                                 -
+  10-12-2023 22:04:10:827:475                         current pid                               3645
+  10-12-2023 22:04:10:827:545                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:10:928:165         received response from 3645                                 -
+  10-12-2023 22:04:10:928:254                         current pid                               3648
+  10-12-2023 22:04:10:928:325                sent SIGUSR1 to 3648                                 -
+   10-12-2023 22:04:11:29:139         received response from 3648                                 -
+   10-12-2023 22:04:11:29:230                         current pid                               3647
+   10-12-2023 22:04:11:29:300                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:11:129:921         received response from 3647                                 -
+   10-12-2023 22:04:11:130:12                         current pid                               3645
+   10-12-2023 22:04:11:130:83                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:11:230:703         received response from 3645                                 -
+  10-12-2023 22:04:11:230:795                         current pid                               3648
+  10-12-2023 22:04:11:230:865                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:11:331:667         received response from 3648                                 -
+  10-12-2023 22:04:11:331:757                         current pid                               3647
+  10-12-2023 22:04:11:331:827                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:11:432:449         received response from 3647                                 -
+  10-12-2023 22:04:11:432:541                         current pid                               3645
+  10-12-2023 22:04:11:432:612                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:11:533:260         received response from 3645                                 -
+  10-12-2023 22:04:11:533:350                         current pid                               3648
+  10-12-2023 22:04:11:533:420                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:11:634:250         received response from 3648                                 -
+  10-12-2023 22:04:11:634:338                         current pid                               3647
+  10-12-2023 22:04:11:634:408                sent SIGUSR1 to 3647                                 -
+   10-12-2023 22:04:11:735:26         received response from 3647                                 -
+  10-12-2023 22:04:11:735:115                         current pid                               3645
+  10-12-2023 22:04:11:735:185                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:11:835:818         received response from 3645                                 -
+  10-12-2023 22:04:11:835:908                         current pid                               3648
+  10-12-2023 22:04:11:835:978                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:11:936:463         received response from 3648                                 -
+  10-12-2023 22:04:11:936:546                         current pid                               3647
+  10-12-2023 22:04:11:936:609                sent SIGUSR1 to 3647                                 -
+   10-12-2023 22:04:12:37:245         received response from 3647                                 -
+   10-12-2023 22:04:12:37:335                         current pid                               3645
+   10-12-2023 22:04:12:37:406                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:12:137:826         received response from 3645                                 -
+  10-12-2023 22:04:12:137:917                         current pid                               3648
+  10-12-2023 22:04:12:137:988                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:12:238:786         received response from 3648                                 -
+  10-12-2023 22:04:12:238:874                         current pid                               3647
+  10-12-2023 22:04:12:238:944                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:12:339:579         received response from 3647                                 -
+  10-12-2023 22:04:12:339:666                         current pid                               3645
+  10-12-2023 22:04:12:339:735                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:12:440:367         received response from 3645                                 -
+  10-12-2023 22:04:12:440:462                         current pid                               3648
+  10-12-2023 22:04:12:440:561                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:12:541:384         received response from 3648                                 -
+  10-12-2023 22:04:12:541:472                         current pid                               3647
+  10-12-2023 22:04:12:541:543                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:12:641:975         received response from 3647                                 -
+   10-12-2023 22:04:12:642:64                         current pid                               3645
+  10-12-2023 22:04:12:642:135                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:12:742:482         received response from 3645                                 -
+  10-12-2023 22:04:12:742:564                         current pid                               3648
+  10-12-2023 22:04:12:742:634                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:12:843:458         received response from 3648                                 -
+  10-12-2023 22:04:12:843:545                         current pid                               3647
+  10-12-2023 22:04:12:843:615                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:12:944:239         received response from 3647                                 -
+  10-12-2023 22:04:12:944:327                         current pid                               3645
+  10-12-2023 22:04:12:944:396                sent SIGUSR1 to 3645                                 -
+    10-12-2023 22:04:13:45:36         received response from 3645                                 -
+   10-12-2023 22:04:13:45:124                         current pid                               3648
+   10-12-2023 22:04:13:45:195                sent SIGUSR1 to 3648                                 -
+   10-12-2023 22:04:13:146:31         received response from 3648                                 -
+  10-12-2023 22:04:13:146:119                         current pid                               3647
+  10-12-2023 22:04:13:146:230                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:13:246:818         received response from 3647                                 -
+  10-12-2023 22:04:13:246:905                         current pid                               3645
+  10-12-2023 22:04:13:246:975                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:13:347:257         received response from 3645                                 -
+  10-12-2023 22:04:13:347:273                         current pid                               3648
+  10-12-2023 22:04:13:347:288                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:13:447:547         received response from 3648                                 -
+  10-12-2023 22:04:13:447:628                         current pid                               3647
+  10-12-2023 22:04:13:447:692                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:13:548:343         received response from 3647                                 -
+  10-12-2023 22:04:13:548:431                         current pid                               3645
+  10-12-2023 22:04:13:548:516                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:13:649:141         received response from 3645                                 -
+  10-12-2023 22:04:13:649:229                         current pid                               3648
+  10-12-2023 22:04:13:649:300                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:13:750:138         received response from 3648                                 -
+  10-12-2023 22:04:13:750:268                         current pid                               3647
+  10-12-2023 22:04:13:750:343                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:13:850:951         received response from 3647                                 -
+   10-12-2023 22:04:13:851:65                         current pid                               3645
+  10-12-2023 22:04:13:851:149                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:13:951:496         received response from 3645                                 -
+  10-12-2023 22:04:13:951:576                         current pid                               3648
+  10-12-2023 22:04:13:951:646                sent SIGUSR1 to 3648                                 -
+   10-12-2023 22:04:14:52:472         received response from 3648                                 -
+   10-12-2023 22:04:14:52:559                         current pid                               3647
+   10-12-2023 22:04:14:52:630                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:14:153:275         received response from 3647                                 -
+  10-12-2023 22:04:14:153:363                         current pid                               3645
+  10-12-2023 22:04:14:153:446                sent SIGUSR1 to 3645                                 -
+   10-12-2023 22:04:14:254:68         received response from 3645                                 -
+  10-12-2023 22:04:14:254:156                         current pid                               3648
+  10-12-2023 22:04:14:254:283                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:14:354:778         received response from 3648                                 -
+  10-12-2023 22:04:14:354:864                         current pid                               3647
+  10-12-2023 22:04:14:354:935                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:14:455:573         received response from 3647                                 -
+  10-12-2023 22:04:14:455:660                         current pid                               3645
+  10-12-2023 22:04:14:455:730                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:14:556:129         received response from 3645                                 -
+  10-12-2023 22:04:14:556:220                         current pid                               3648
+  10-12-2023 22:04:14:556:291                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:14:657:125         received response from 3648                                 -
+  10-12-2023 22:04:14:657:212                         current pid                               3647
+  10-12-2023 22:04:14:657:283                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:14:757:909         received response from 3647                                 -
+  10-12-2023 22:04:14:757:996                         current pid                               3645
+   10-12-2023 22:04:14:758:83                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:14:858:702         received response from 3645                                 -
+  10-12-2023 22:04:14:858:788                         current pid                               3648
+  10-12-2023 22:04:14:858:859                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:14:959:695         received response from 3648                                 -
+  10-12-2023 22:04:14:959:782                         current pid                               3647
+  10-12-2023 22:04:14:959:853                sent SIGUSR1 to 3647                                 -
+   10-12-2023 22:04:15:60:479         received response from 3647                                 -
+   10-12-2023 22:04:15:60:566                         current pid                               3645
+   10-12-2023 22:04:15:60:636                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:15:161:273         received response from 3645                                 -
+  10-12-2023 22:04:15:161:393                         current pid                               3648
+  10-12-2023 22:04:15:161:466                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:15:262:314         received response from 3648                                 -
+  10-12-2023 22:04:15:262:409                         current pid                               3647
+  10-12-2023 22:04:15:262:481                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:15:363:103         received response from 3647                                 -
+  10-12-2023 22:04:15:363:191                         current pid                               3645
+  10-12-2023 22:04:15:363:277                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:15:463:634         received response from 3645                                 -
+  10-12-2023 22:04:15:463:715                         current pid                               3648
+  10-12-2023 22:04:15:463:785                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:15:564:602         received response from 3648                                 -
+  10-12-2023 22:04:15:564:681                         current pid                               3647
+  10-12-2023 22:04:15:564:745                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:15:665:383         received response from 3647                                 -
+  10-12-2023 22:04:15:665:470                         current pid                               3645
+  10-12-2023 22:04:15:665:540                sent SIGUSR1 to 3645                                 -
+   10-12-2023 22:04:15:766:92         received response from 3645                                 -
+  10-12-2023 22:04:15:766:171                         current pid                               3648
+  10-12-2023 22:04:15:766:285                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:15:866:583         received response from 3648                                 -
+  10-12-2023 22:04:15:866:673                         current pid                               3647
+  10-12-2023 22:04:15:866:743                sent SIGUSR1 to 3647                                 -
+   10-12-2023 22:04:15:967:24         received response from 3647                                 -
+  10-12-2023 22:04:15:967:107                         current pid                               3645
+  10-12-2023 22:04:15:967:176                sent SIGUSR1 to 3645                                 -
+   10-12-2023 22:04:16:67:402         received response from 3645                                 -
+   10-12-2023 22:04:16:67:490                         current pid                               3648
+   10-12-2023 22:04:16:67:566                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:16:167:796         received response from 3648                                 -
+  10-12-2023 22:04:16:167:875                         current pid                               3647
+  10-12-2023 22:04:16:167:944                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:16:268:700         received response from 3647                                 -
+  10-12-2023 22:04:16:268:791                         current pid                               3645
+  10-12-2023 22:04:16:268:864                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:16:369:493         received response from 3645                                 -
+  10-12-2023 22:04:16:369:584                         current pid                               3648
+  10-12-2023 22:04:16:369:656                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:16:470:395         received response from 3648                                 -
+  10-12-2023 22:04:16:470:481                         current pid                               3647
+  10-12-2023 22:04:16:470:555                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:16:570:880         received response from 3647                                 -
+  10-12-2023 22:04:16:570:962                         current pid                               3645
+   10-12-2023 22:04:16:571:74                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:16:671:414         received response from 3645                                 -
+  10-12-2023 22:04:16:671:495                         current pid                               3648
+  10-12-2023 22:04:16:671:566                sent SIGUSR1 to 3648                                 -
+   10-12-2023 22:04:16:772:86         received response from 3648                                 -
+  10-12-2023 22:04:16:772:176                         current pid                               3647
+  10-12-2023 22:04:16:772:246                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:16:872:641         received response from 3647                                 -
+  10-12-2023 22:04:16:872:730                         current pid                               3645
+  10-12-2023 22:04:16:872:801                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:16:973:203         received response from 3645                                 -
+  10-12-2023 22:04:16:973:285                         current pid                               3648
+  10-12-2023 22:04:16:973:348                sent SIGUSR1 to 3648                                 -
+   10-12-2023 22:04:17:74:149         received response from 3648                                 -
+   10-12-2023 22:04:17:74:280                         current pid                               3647
+   10-12-2023 22:04:17:74:355                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:17:174:960         received response from 3647                                 -
+   10-12-2023 22:04:17:175:47                         current pid                               3645
+  10-12-2023 22:04:17:175:118                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:17:275:512         received response from 3645                                 -
+  10-12-2023 22:04:17:275:603                         current pid                               3648
+  10-12-2023 22:04:17:275:673                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:17:376:498         received response from 3648                                 -
+  10-12-2023 22:04:17:376:585                         current pid                               3647
+  10-12-2023 22:04:17:376:655                sent SIGUSR1 to 3647                                 -
+   10-12-2023 22:04:17:477:55         received response from 3647                                 -
+  10-12-2023 22:04:17:477:145                         current pid                               3645
+  10-12-2023 22:04:17:477:215                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:17:577:838         received response from 3645                                 -
+  10-12-2023 22:04:17:577:935                         current pid                               3648
+    10-12-2023 22:04:17:578:6                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:17:678:808         received response from 3648                                 -
+  10-12-2023 22:04:17:678:895                         current pid                               3647
+  10-12-2023 22:04:17:678:966                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:17:779:597         received response from 3647                                 -
+  10-12-2023 22:04:17:779:686                         current pid                               3645
+  10-12-2023 22:04:17:779:769                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:17:880:387         received response from 3645                                 -
+  10-12-2023 22:04:17:880:474                         current pid                               3648
+  10-12-2023 22:04:17:880:546                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:17:980:844         received response from 3648                                 -
+  10-12-2023 22:04:17:980:925                         current pid                               3647
+  10-12-2023 22:04:17:980:995                sent SIGUSR1 to 3647                                 -
+   10-12-2023 22:04:18:81:651         received response from 3647                                 -
+   10-12-2023 22:04:18:81:738                         current pid                               3645
+   10-12-2023 22:04:18:81:821                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:18:182:213         received response from 3645                                 -
+  10-12-2023 22:04:18:182:295                         current pid                               3648
+  10-12-2023 22:04:18:182:359                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:18:282:598         received response from 3648                                 -
+  10-12-2023 22:04:18:282:680                         current pid                               3647
+  10-12-2023 22:04:18:282:750                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:18:382:996         received response from 3647                                 -
+   10-12-2023 22:04:18:383:75                         current pid                               3645
+  10-12-2023 22:04:18:383:144                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:18:483:365         received response from 3645                                 -
+  10-12-2023 22:04:18:483:442                         current pid                               3648
+  10-12-2023 22:04:18:483:509                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:18:584:311         received response from 3648                                 -
+  10-12-2023 22:04:18:584:400                         current pid                               3647
+  10-12-2023 22:04:18:584:471                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:18:684:701         received response from 3647                                 -
+  10-12-2023 22:04:18:684:785                         current pid                               3645
+  10-12-2023 22:04:18:684:856                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:18:785:106         received response from 3645                                 -
+  10-12-2023 22:04:18:785:217                         current pid                               3648
+  10-12-2023 22:04:18:785:314                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:18:885:676         received response from 3648                                 -
+  10-12-2023 22:04:18:885:765                         current pid                               3647
+  10-12-2023 22:04:18:885:833                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:18:986:102         received response from 3647                                 -
+  10-12-2023 22:04:18:986:176                         current pid                               3645
+  10-12-2023 22:04:18:986:296                sent SIGUSR1 to 3645                                 -
+   10-12-2023 22:04:19:86:595         received response from 3645                                 -
+   10-12-2023 22:04:19:86:674                         current pid                               3648
+   10-12-2023 22:04:19:86:742                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:19:186:985         received response from 3648                                 -
+   10-12-2023 22:04:19:187:59                         current pid                               3647
+  10-12-2023 22:04:19:187:121                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:19:287:641         received response from 3647                                 -
+  10-12-2023 22:04:19:287:724                         current pid                               3645
+  10-12-2023 22:04:19:287:816                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:19:388:198         received response from 3645                                 -
+  10-12-2023 22:04:19:388:229                         current pid                               3648
+  10-12-2023 22:04:19:388:250                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:19:488:468         received response from 3648                                 -
+  10-12-2023 22:04:19:488:570                         current pid                               3647
+  10-12-2023 22:04:19:488:655                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:19:588:905         received response from 3647                                 -
+    10-12-2023 22:04:19:589:6                         current pid                               3645
+   10-12-2023 22:04:19:589:94                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:19:689:641         received response from 3645                                 -
+  10-12-2023 22:04:19:689:731                         current pid                               3648
+  10-12-2023 22:04:19:689:801                sent SIGUSR1 to 3648                                 -
+  10-12-2023 22:04:19:790:108         received response from 3648                                 -
+  10-12-2023 22:04:19:790:221                         current pid                               3647
+  10-12-2023 22:04:19:790:293                sent SIGUSR1 to 3647                                 -
+  10-12-2023 22:04:19:890:716         received response from 3647                                 -
+  10-12-2023 22:04:19:890:742                         current pid                               3645
+  10-12-2023 22:04:19:890:760                sent SIGUSR1 to 3645                                 -
+  10-12-2023 22:04:19:990:996         received response from 3645                                 -
+   10-12-2023 22:04:19:991:78                         current pid                               3648
+  10-12-2023 22:04:19:991:148                sent SIGUSR1 to 3648                                 -
+   10-12-2023 22:04:20:91:409         received response from 3648                                 -
+   10-12-2023 22:04:20:91:500                         current pid                               3647
+   10-12-2023 22:04:20:91:570                sent SIGUSR1 to 3647                                 -
