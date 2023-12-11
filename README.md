@@ -20,7 +20,7 @@ Table of Contents
 
 Architecture
 ----------------------
-Shown here is the software architecture of the system depicting the parent/child relationships as well as interprocess communications used.
+Shown here is the software architecture of the system depicting the parent/child relationships as well as interprocess communications used.<br>
 ![Architecture](Architecture.png)
 
 Overview
@@ -37,7 +37,7 @@ The server is the first of the core processes to be run by the parent. Its role 
 | Watchdog PID | watchdog | server, UI, drone |
 | Window Size | UI | drone |
 | Drone Position | drone | UI |
-Once the shared memory objects have been created, the server runs in a loop with a time interval until it receives a terminate signal (`SIGTERM`) either from the watchdog, or due to a user input.
+<br>Once the shared memory objects have been created, the server runs in a loop with a time interval until it receives a terminate signal (`SIGTERM`) either from the watchdog, or due to a user input.
 
 ### User interface ###
 The user interface is the frontend process for the entire system. It is the location where all the inputs from the user are gathered, as well as where all the visual outputs to the user are depicted. The process first creates a graphical user interface with the help of the `ncurses` library, consisting of two windows: one drone window, to depict the virtual environement the drone moves in, and an inspector window, that displays the drone's position numerically. Subsequently, the process enters a loop where in each iteration, it looks to see if the user has given any key inputs using the `wgetch()` function, following which it passes on the acquired keyvalue to the shared memory. Given that there may be times the user does not provide any input, to ensure that the `wgetch()` function does not block each iteration of the loop indefinetely waiting for it, we also use the `wtimeout()` function, which specifies a maximum time interval `wgetch()` should wait for, at the end of which the execution is continued. Besides passing keyvalues, the UI also reads the latest drone position from the shared memory and depicts it as such. 
