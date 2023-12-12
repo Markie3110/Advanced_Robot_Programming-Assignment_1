@@ -10,10 +10,15 @@
 #include <errno.h>
 #include "log.h"
 
-char currenttime[150];
+
+char currenttime[150]; // Global variable to hold the string depicting the current timestamp.
+
 
 void* current_time()
 {
+    /*
+    Returns a string depicting the current timestamp.
+    */
 
     int day, month, year, hours, minutes, seconds, milliseconds, microseconds;
 
@@ -40,8 +45,13 @@ void* current_time()
     return &currenttime;
 }
 
+
 void logopen(char *logpath)
 {
+    /*
+    Opens the logfile specified by logpath.
+    */
+
     FILE *logfd = fopen(logpath, "w");
     if (logfd == NULL)
     {
@@ -58,24 +68,39 @@ void logopen(char *logpath)
     fclose(logfd);
 }
 
+
 void logdouble(char *logpath, char *variablename, double variablevalue)
 {
+    /*
+    Logs a variable of type double to the logfile.
+    */
+   
     FILE *fd = fopen(logpath, "a");
     char *now = current_time();
     fprintf(fd, "%30s%35s%35.2f\n", now, variablename, variablevalue);
     fclose(fd);
 }
 
+
 void logerror(char *logpath, char *errormessage, int error)
 {
+    /*
+    Takes the errno variable and logs its associated message into the logfile.
+    */
+
     FILE *fd = fopen(logpath, "a");
     char *now = current_time();
     fprintf(fd, "%30s%35s%35s\n", now, errormessage, strerror(error));
     fclose(fd);
 }
 
+
 void logmessage(char *logpath, char *message)
 {
+    /*
+    Logs a message specified by the programmer to the logfile.
+    */
+
     FILE *fd = fopen(logpath, "a");
     char *now = current_time();
     char *str = "-\n";
@@ -83,8 +108,13 @@ void logmessage(char *logpath, char *message)
     fclose(fd);
 }
 
+
 void logint(char *logpath, char *variablename, int variablevalue)
 {
+    /*
+    Logs a variable of type integer to the logfile.
+    */
+
     FILE *fd = fopen(logpath, "a");
     char *now = current_time();
     fprintf(fd, "%30s%35s%35d\n", now, variablename, variablevalue);

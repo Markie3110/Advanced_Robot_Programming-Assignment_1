@@ -27,11 +27,6 @@ void interrupt_signal_handler(int signum)
 
 int main(int argc, char *argv[])
 {
-    // Print the current working directory
-    char buf[100];
-    getcwd(buf, sizeof(buf));
-    printf("Current working directory: %s\n", buf);
-
     // Declare a signal handler to handle SIGINT
     struct sigaction act;
     bzero(&act, sizeof(act));

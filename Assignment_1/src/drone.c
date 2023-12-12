@@ -81,6 +81,12 @@ double CalculatePositionY(int forceY, double y1, double y2)
 
 int main(int argc, char *argv[])
 {
+    // Print the current working directory
+    char cwd[100];
+    getcwd(cwd, sizeof(cwd));
+    printf("Current working directory: %s\n", cwd);
+
+    
     // Create a log file and open it
     logopen(logpath);
 

@@ -53,6 +53,12 @@ void watchdog_signal_handler(int signum)
 
 int main(int argc, char *argv)
 {
+    // Print the current working directory
+    char cwd[100];
+    getcwd(cwd, sizeof(cwd));
+    printf("Current working directory: %s\n", cwd);
+
+    
     // Open the log file
     logopen(logpath);
     
