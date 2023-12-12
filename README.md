@@ -83,7 +83,7 @@ $ git clone "https://github.com/Markie3110/Advanced_Robot_Programming-Assignment
 2. Download the .zip from Github<br>
 In a browser go to the repository on Github and download the .zip file availabe in the code dropdown box found at the top right. Unzip the file to access the contents.<br><br>
 **NOTE:** Due to the use of named FIFOs with paths, it is important that the Assignment_1 folder is stored in the root directory of your system. There should be no intermediary folders between the root and Assignment_1
-folder or else the system will not run. The directory the processes are executed in is displayed in the konsole terminal for every process to assist you.
+folder or else the system will not run. The directory the processes are executed in is displayed in the konsole terminal for every process. Ensure that the folder is stored only in the path mentioned in the terminal.
 
 
 How to Run
@@ -116,7 +116,7 @@ The keys represent the following movements for the drone
 
 Known Errors
 ----------------------
-Occassionaly, the simulator may hang after executing `make` due to one or more shared memory objects or FIFOs not being initialized properly. In such a situation simply terminate the current program execution using CTRL+C, and call `make` again. 
+Occassionaly, the simulator may hang or crash after executing `make` due to one or more shared memory objects or FIFOs not being initialized properly. In such a situation simply terminate the current program execution using CTRL+C, and call `make` again. 
 
 Authors Notes
 ----------------------
