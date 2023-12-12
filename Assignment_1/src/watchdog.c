@@ -251,7 +251,7 @@ int main(int argc, char *argv)
 
 
     // Wait a small duration for all the processes to intialize and run
-    sleep(3);
+    sleep(4);
 
 
     while(1)
