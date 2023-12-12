@@ -25,7 +25,7 @@ Shown here is the software architecture of the system depicting the parent/child
 
 Overview
 ----------------------
-As depicted in the architecture, the system consists of 5 core processes, namely: main, server, user interface, drone and watchdog, that all work concurrently to run the simulator. Besides the core programs, we also have two header files: parameters and log that are used by the core files during runtime. A detailed description of each is given below.
+As depicted in the architecture, the system consists of 5 core processes, namely: main, server, user interface, drone and watchdog, that all work concurrently to run the simulator. Besides the core programs, we also have two header files stored in the include folder: parameters and log that are used by the core files during runtime. A detailed description of each is given below.
 
 ### Main ###
 Main is the parent process of the entire system and is solely responsible for executing each and every individual process required by the simulator. It does this by repeatedly forking itself using the `fork()` function, and then executing each process within the newly created child with `execvp()`. Once all the necessary processes have been created, main waits until all the created children have ended their execution, following which it itself is terminated.
@@ -64,9 +64,10 @@ Like the UI, the drone process runs in a loop and receives the keypressed values
 The watchdog is the process that oversees the overall system behaviour by observing all the processes and terminating everything if any of them encounter a critical error. During their intialization, every process sends their pids to the watchdog using named pipes, which in turn conveys its own pid to them using a shared memory object. Using these pids, the watchdog sends a `SIGUSR1` signal to a process, which in turn is supposed to send back a `SIGUSR2` signal if it is working properly. The watchdog waits for upto three cycles, characterised by a time duration, for a response. If the process does not return the required signal within the required number of cycles, the watchdog takes this to mean that the process has encountered a critical error and subsequently terminates all the running processes. On the other hand, if the signal is received within the specificied time, the watchdog moves on to the next process. Once the watchdog reaches the final pid, it returns back to the first and starts over until the user terminates the system.
 
 ### Parameters ###
-
+The parameter file contains a set of constants that are used by the processes, stored in one compact location.
 
 ### Log ###
+The log parameter file defines a series of functions that allow the processes to open and edit log files during runtime.
 
 
 Installation
